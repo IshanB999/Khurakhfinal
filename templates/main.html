@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main.css' %}">
+    <script src="https://kit.fontawesome.com/6f2e95887d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    {% include 'nav.html' %}
+
+    {% block content %}
+
+    {% endblock %}
+
+
+    <div class="footer">
+        <ul class="foot_nav">
+            <li>How It Works</li>
+            <li>FAQs</li>
+            <li>Contact</li>
+            
+        </ul>
+            <ul class="social_media">
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+            </ul>
+            <p style="margin-top: 20px; text-align: center; padding: 50px;">CopyRight All Right Resevered 2023.</p>
+    </div>
+
+
+
+</body>
+</html>
