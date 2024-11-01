@@ -10,6 +10,7 @@
 // project colors
 :root {
     --primary-color: #158644;
+    --web-green:#128047;
     --secondary-color: #C5F6DD;
     --green-logo:#75b13b;
     --page-bg:#F2F1F1;
@@ -59,6 +60,10 @@
   }
   .mt-15{
     margin-top: 15px;
+  }
+
+  .text-center{
+    text-align: center;
   }
 // css for button
 
@@ -505,3 +510,127 @@ $stretch:-80px;
         column-gap: 20px;
     }
 }
+.dialog_box{
+    // border: 1px solid black;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 10;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    visibility: hidden;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    .dialog_sm,.dialog{
+        // border: 1px solid black;
+        background-color: white;
+        width: 50%;
+        max-width: 500px;
+        margin: auto;
+        padding: 10px;
+        border-radius: 10px;
+        transform: scale(0.7); /* Initial small scale */
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+}
+
+/* Active state for showing dialog */
+.dialog-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dialog-overlay.show .dialog {
+    transform: scale(1); /* Grows to full size */
+    opacity: 1;
+}
+
+
+.base_input{
+    width: 100%;
+    border: 1px solid green;
+    border-radius: 5px;
+    padding: 5px;
+    height: 50px;
+    padding-left: 20px;
+    background-color: transparent;
+    font-size: 1rem;
+}
+
+// login css
+.login_page{
+
+    .header{
+        text-align: center;
+        color: var(--text-color);
+    }
+    .sign_in{
+        color: var(--text-color);
+    }
+
+    .dialog_sm{
+        padding: 20px;
+        box-shadow: 0px 0px 10px gray;
+        // height: 80%;
+        position: relative;
+        transform: scale(0.7); /* Initial small scale */
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    
+    }
+
+    .close_login{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        font-size: 2rem;
+        color: var(--text-color);
+        &:hover{
+            color: green;
+        }
+    }
+
+    .underline{
+        border-bottom: 3px solid var((--web-green));
+    }
+
+    .forgot_password{
+        display: flex;
+        justify-content: right;
+        margin-top: 10px;
+        color: var(--text-color);
+    }
+
+    form{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        button{
+            background-image: none;
+            background-color: var(--web-green);
+            height: 50px;
+        }
+    }
+
+}
+
+
+
+.form-control{
+    margin-top: 5px;
+    label{
+        padding-bottom: 10px;
+        color: var(--text-color);
+    }
+    input{
+        margin-top: 10px;
+    }
+}
+
