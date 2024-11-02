@@ -16,4 +16,12 @@ def signup(request):
 
     return HttpResponse(tempate.render())
 
+
+
+def bmi_calculator(request):
+    template = loader.get_template('bmi/calculator.html')
+
+
+    return HttpResponse(template.render())
+
     

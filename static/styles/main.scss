@@ -54,6 +54,12 @@
     color: var(--text-color);
   }
 
+  .align-item-middle{
+    display: flex;
+    justify-content: center;
+    // border: 1px solid black;
+    width: 100%;
+  }
   .mt-5{
     margin-top: 5px;
   }
@@ -95,6 +101,14 @@
         background-image: linear-gradient(30deg,rgb(7, 202, 7),var(--primary-color));
         font-size: 0.9rem;
 
+    }
+
+    &.rect{
+        border-radius: 5px;
+    }
+    &.simple{
+        background-image: none;
+        background-color: var(--primary-color);
     }
     &.outline{
         background-color: transparent;
@@ -629,7 +643,9 @@ $stretch:-80px;
     }
 
 }
-
+a{
+    text-decoration: none;
+}
 
 
 .form-control{
@@ -679,6 +695,217 @@ $stretch:-80px;
             img{
                 max-height: 400px;
             }
+        }
+    }
+}
+
+
+.bmi_calculator_container{
+    background-color: var(--secondary-color);
+    height: 80vh;
+    .header{
+        display: flex;
+        column-gap: 20px;
+        place-items: center;
+        padding: 10px;
+        .logo{
+            background-color: white;
+            padding: 15px;
+            border-radius: 50%;
+            img{
+                height: 60px;
+            }
+        }
+        .title{
+            color: var(--primary-color);
+        }
+    }
+
+    .size_manager{
+        display: flex;
+        background-color: white;
+        padding: 40px;
+        column-gap: 30px;
+        border-radius: 10px;
+        height: 80%;
+
+    }
+
+    padding: 0px 50px 50px 50px;
+    form{
+        background-color: white;
+        margin-top: 20px;
+        border-radius: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 20px;
+        gap: 50px;
+        width: 50%;
+        .gender{
+            // border: 1px solid black;
+            .flex-box{
+                display: flex;
+                margin-top: 10px;
+
+            }
+        }
+
+        .bmi_box{
+            // border: 1px solid black;
+            padding: 2px;
+            border-radius: 5px;
+            width: 100px;
+            text-align: center;
+            background-color: white;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            cursor: pointer;
+
+            &.active{
+                border: 1px solid var(--primary-color);
+                color: var(--primary-color);
+            }
+
+            &:hover{
+                border: 1px solid var(--primary-color);
+                color: var(--primary-color);
+            }
+        }
+        .form-box{
+            width: 40%;
+            label{
+                margin-bottom: 10px;
+                // border: 1px solid black;
+            }
+        }
+        .cover-input{
+            border: 1px solid var(--text-color);
+            display: flex;
+            // height: 30px;
+            place-content: center;
+            place-items: center;
+            border-radius: 5px;
+            justify-content: space-between;
+            color: var(--text-color);
+            padding: 5px;
+
+            input{
+                height: 100%;
+                width: 90%;
+                border: none;
+                background-color: none;
+                padding-left: 10px;
+                &:focus{
+                    outline: none;
+                }
+            }
+            span{
+                font-size: 0.8rem;
+                min-width: 50px;
+                text-align: right;
+            }
+        }
+
+        .height{
+            input{
+                border: none;
+                width: 50%;
+                border-bottom: 1px solid var(--text-color);
+                padding: 5px;
+                &:focus{
+                    outline: none;
+                }
+            }
+        }
+
+        .button_box{
+            button{
+                height: 50px;
+                width: 200px;
+                font-size: 1rem;
+                background-color: var(--primary-color);
+            }
+        }
+    }
+
+    .bmi-result-box{
+        width: 50%;
+        height: 100%;
+        // border: 1px solid black;
+        .sm{
+         background-color: #f1efef;
+         height: 95%;
+         padding: 20px;
+         border-radius: 10px;
+         .header{
+            text-align: center;
+            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            .result{
+                background-color: rgb(195, 195, 195);
+                padding: 5px;
+                color: black;
+                padding-left: 10px;
+                padding-right: 10px;
+                margin-top: 10px;
+
+            }
+         }
+
+        .box_container{
+            // border: 1px solid black;
+            // height: 100%;
+            display: flex;
+            padding: 5px;
+            position: relative;
+            place-items: center;
+
+            .ticker{
+                height: 30px;
+                width: 5px;
+                background-color: black;
+                left: 0;
+            }
+
+            // column-gap:10px;
+            .boxes{
+                height: 5px;
+                width: 25%;
+                p{
+                    margin-top: 10px;
+                    font-size: 0.8rem;
+                    text-align: center;
+                    color: var(--text-color);
+                }
+                // border-top: 1px solid black;
+                &.yellow{
+                    background-color: rgb(203, 203, 2);
+                }
+                &.green{
+                    background-color: var(--primary-color);
+                }
+                &.orange{
+                    background-color: orange;
+                }
+                &.red{
+                    background-color: red;
+                }
+             }
+        }
+
+        .report{
+            text-align: center;
+            margin-top: 50px;
+            h2{
+                color: var(--primary-color);
+                font-size: 1.4rem;
+                
+            }
+            p{
+                font-size: 0.8rem;
+            }
+        }
         }
     }
 }

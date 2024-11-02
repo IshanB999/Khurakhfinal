@@ -1,0 +1,102 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+{% load static %}
+<div class="bmi_calculator_container">
+    <div class="header">
+        <div class="logo">
+            <img src="{% static 'images/icons/calculator.png' %}" alt="">
+        </div>
+        <div class="title">
+            <h2>BMI Calculator</h2>
+            <p>Body Mass Index</p>
+        </div>
+    </div>
+
+   <div class="size_manager">
+    <form action="">
+        <div class="gender form-box">
+            <label for="">Gender</label>
+            <div class="form-flex mt-5">
+                <div class="bmi_box active">Male</div>
+                <div class="bmi_box">Female</div>
+            </div>
+        </div>
+
+
+            <div class="form-box">
+                <label for="">Age</label>
+                <div class="cover-input mt-5">
+                    <input type="number" class="">
+                    <span>Years</span>
+                </div>
+                <p class="p-text-color">Between 2 years to 120 years</p>
+        </div>
+
+
+        <div class="form-box">
+            <label for="">Height</label>
+
+            <div class="form-flex height mt-10">
+                <input type="number" placeholder="Ft">
+
+            <input type="number" placeholder="In">
+            </div>
+        </div>
+
+
+        
+        <div class="form-box">
+            <label for="">Weight</label>
+            <div class="cover-input mt-5">
+                <input type="number" class="">
+                <span>In KGs</span>
+            </div>
+    </div>
+
+    <div class="align-item-middle button_box">
+        <button class="global_btn simple rect">Calculate</button>
+    </div>
+    </form>
+
+    <div class="bmi-result-box">
+        <div class="sm">
+            <div class="header">
+                <h2>Your BMI is</h2>
+                <h2 class="result">24.80</h2>
+
+            </div>
+
+        <div class="box_container">
+
+            <div class="ticker"></div>
+            
+            <div class="boxes yellow">
+                <p>Underweight</p>
+            </div>
+            <div class="boxes green">
+                <p>Normal</p>
+            </div>
+            <div class="boxes orange">
+                <p>Overweight</p>
+            </div>
+            <div class="boxes red">
+                <p>Obesity</p>
+            </div>
+        </div>
+
+        <div class="report">
+            <h2>Great Shape</h2>
+
+        <p>By maintaining a healthy weight, you lower your risk
+                           of developing serious health problems.</p>
+        </div>
+        </div>
+        <p class="mt-5 primary-color">Healthy BMI range : 18.5 kg/m2 - 25 kg/m2</p>
+    </div>
+   </div>
+</div>
+
+{% endblock content %}
