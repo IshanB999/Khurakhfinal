@@ -11,3 +11,9 @@ def index(request):
 
 
 
+def signup(request):
+    tempate = loader.get_template('auth/signup.html')
+
+    return HttpResponse(tempate.render())
+
+    

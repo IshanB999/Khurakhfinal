@@ -23,8 +23,20 @@
   --spacing: 16px;
 }
 
+.cur-p {
+  cursor: pointer;
+}
+
 .primary-color {
   color: var(--primary-color);
+}
+
+.d-flex {
+  display: flex;
+}
+
+.m-auto {
+  margin: auto;
 }
 
 .primary-black {
@@ -525,4 +537,40 @@
 }
 .form-control input {
   margin-top: 10px;
+}
+
+.form-flex {
+  display: flex;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+}
+
+.signup_page {
+  padding: 0px 100px;
+  height: 80vh;
+}
+.signup_page .header {
+  text-align: center;
+  color: var(--text-color);
+}
+.signup_page .signup_container {
+  margin-top: 30px;
+}
+.signup_page .signup_container .underline {
+  border-bottom: 10px;
+  background-color: var(--primary-color);
+  margin-top: 20px;
+  height: 5px;
+}
+.signup_page .signup_container .global_btn {
+  width: 100%;
+  height: 50px;
+  margin-top: 20px;
+}
+.signup_page .signup_container .img_box {
+  border-radius: 5px;
+  overflow: hidden;
+}
+.signup_page .signup_container .img_box img {
+  max-height: 400px;
 }/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+{% load static %}
+
+    <div class="signup_page">
+        <h1 class="header mt-15">CREATE AN ACCOUNT</h1>
+        <div class="signup_container d-flex">
+            <form action="" class="m-auto">
+                <div class="form-control">
+                    <label for="">EMAIL ADDRESS</label>
+                    <input type="email" name="email" required class="base_input">
+                </div>
+                <div class="form-control">
+                    <label for="">PASSWORD</label>
+                    <input type="password" name="password" required class="base_input">
+                </div>
+                <div class="underline"></div>
+                <div class="form-flex">
+                    <div class="form-control">
+                        <input type="text" name="first_name" name="first_name" required class="base_input" placeholder="First Name">
+                    </div>
+                    <div class="form-control">
+                        <input type="text" placeholder="Last Name" name="last_name" class="base_input">
+                    </div>
+    
+                </div>
+    
+                
+                <button class="global_btn mt-10" type="submit">NEXT</button>
+    
+                <p class="mt-15 p-text-color cur-p" onclick="openDialog()">Already have an account ?<span class="primary-color">Sign in.</span>.</p>
+            </form>
+    
+            <div class="img_box">
+                <img src="{% static 'images/how_it_works1.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
