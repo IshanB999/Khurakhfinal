@@ -120,6 +120,7 @@
   place-content: center;
   place-items: center;
   justify-content: space-between;
+  border-bottom: 10px solid var(--page-bg);
 }
 .navbar .logo_box {
   padding: 10px;
@@ -181,7 +182,6 @@
 .homepage_container {
   height: 120vh;
   position: relative;
-  border-top: 10px solid var(--page-bg);
   overflow: hidden;
 }
 .homepage_container .size_manager {
@@ -709,7 +709,7 @@ a {
 }
 .bmi_calculator_container .bmi-result-box .sm {
   background-color: #f1efef;
-  height: 95%;
+  height: 80%;
   padding: 20px;
   border-radius: 10px;
 }
@@ -737,14 +737,26 @@ a {
   height: 30px;
   width: 5px;
   background-color: black;
+  position: absolute;
+}
+.bmi_calculator_container .bmi-result-box .sm .box_container .ticker.underweight {
   left: 0;
+}
+.bmi_calculator_container .bmi-result-box .sm .box_container .ticker.normal {
+  left: 25%;
+}
+.bmi_calculator_container .bmi-result-box .sm .box_container .ticker.overweight {
+  left: 50%;
+}
+.bmi_calculator_container .bmi-result-box .sm .box_container .ticker.obesity {
+  left: 75%;
 }
 .bmi_calculator_container .bmi-result-box .sm .box_container .boxes {
   height: 5px;
   width: 25%;
 }
 .bmi_calculator_container .bmi-result-box .sm .box_container .boxes p {
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 0.8rem;
   text-align: center;
   color: var(--text-color);
@@ -771,4 +783,79 @@ a {
 }
 .bmi_calculator_container .bmi-result-box .sm .report p {
   font-size: 0.8rem;
+}
+.bmi_calculator_container .plan_meal_btn {
+  height: 40px;
+  width: 200px;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.faq-button {
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.151);
+  position: relative;
+}
+
+@keyframes jello-vertical {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  40% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  50% {
+    transform: scale3d(0.85, 1.15, 1);
+  }
+  65% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  75% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+.tooltip {
+  position: absolute;
+  top: -20px;
+  opacity: 0;
+  background-color: #ffe53b;
+  background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: 0.2s;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+
+.tooltip::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #ff2525;
+  background-size: 1000%;
+  background-position: center;
+  transform: rotate(45deg);
+  bottom: -15%;
+  transition-duration: 0.3s;
+}
+
+.faq-button:hover .tooltip {
+  top: -60px;
+  opacity: 1;
+  transition-duration: 0.3s;
 }/*# sourceMappingURL=main.css.map */
