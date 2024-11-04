@@ -4,10 +4,10 @@ function openDialog() {
 }
 
 function closeDialog() {
-    document.getElementById('dialogOverlay').classList.remove('show');
+    window.history.back();
+    // document.getElementById('dialogOverlay').classList.remove('show');
 }
 
-console.log(window.location.pathname)
 
 
 if(window.location.pathname.includes("login")){
@@ -44,4 +44,15 @@ const bmit = 37; // Example value for bmit
 }
 
 calculate_ticker()
+
+
+
+
+
+// dropdown js
+
+function toggleDropdown(event) {
+  const dropdown = document.getElementById('dropdownMenu');
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+}
 

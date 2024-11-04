@@ -219,8 +219,10 @@
 }
 
 
+
 .user_box{
     // border: 1px solid black;
+    cursor: pointer;
     display: flex;
     place-content: center;
     place-items: center;
@@ -244,6 +246,36 @@
         place-items: center;
         padding: 5px;
     }
+}
+
+
+.profile-icon {
+
+}
+
+.dropdown {
+    display: none; /* Hide by default */
+    position: absolute; /* Position relative to the parent */
+    top: 60px; /* Position below the icon */
+    right: 20; /* Align to the right */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure dropdown is on top */
+
+    
+ a {
+    display: block;
+    padding: 10px 15px;
+    color: black;
+    text-decoration: none;
+    &:hover {
+        background-color: #f1f1f1; /* Highlight on hover */
+    }
+}
+
+ 
 }
 
 

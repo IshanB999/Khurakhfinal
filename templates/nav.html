@@ -13,11 +13,15 @@
         <div class="top_buttons">
             {% if user.is_authenticated %}
             <!-- Display user info and logout button -->
-            <div class="user_box">
+            <div class="user_box profile-icon"  onclick="toggleDropdown()">
                 <span class="icon material-symbols-outlined">
                     person
                     </span>
                 <div class="user-info">{{ user.first_name }} {{ user.last_name }}</div>
+            </div>
+            <div class="dropdown" id="dropdownMenu">
+                <a href="#">Profile</a>
+                <a href="{% url 'logout' %}">Logout</a>
             </div>
             <!-- <a href="{% url 'logout' %}">
                 <button class="global_btn">LOGOUT</button>
