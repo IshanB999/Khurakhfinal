@@ -3,24 +3,35 @@
 <div class="login_page dialog_box dialog-overlay" id="dialogOverlay">
     <div class="dialog_sm dialog">
         <h2 class="header mt-15">SIGN IN</h2>
-        <form action="">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
             <span class="material-symbols-outlined close_login" onclick="closeDialog()">
                 close
                 </span>
             <div class="form-control">
-                <label for="email">EMAIL ADDRESS</label>
-                <input type="text" class="base_input">
+                <label for="email">EMAIL OR USERNAME</label>
+                <input type="text" class="base_input" name="email">
             </div>
     
+
+
     
             <div class="form-control">
                 <label for="password">PASSWORD</label>
-                <input type="password" class="base_input">
+                <input type="password" class="base_input" name="password">
                 <div class="forgot_password">
                 <p>Forgot Password ?</p>
 
                 </div>
             </div>
+
+            {% if messages %}
+            <ul class="messages no_list_style">
+                {% for message in messages %}
+                    <li class="red sm_text">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     
                 <button class="global_btn submit mt-15">SUBMIT</button>
     

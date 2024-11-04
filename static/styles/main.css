@@ -35,6 +35,18 @@
   display: flex;
 }
 
+.no_list_style {
+  list-style: none;
+}
+
+.red {
+  color: red;
+}
+
+.sm_text {
+  font-size: 0.8rem;
+}
+
 .m-auto {
   margin: auto;
 }
@@ -177,6 +189,33 @@
 }
 .navbar .right_nav_content .nav_items ul li:hover, .navbar .right_nav_content .nav_items ul a:hover {
   color: black;
+}
+
+.user_box {
+  display: flex;
+  place-content: center;
+  place-items: center;
+  -moz-column-gap: 5px;
+       column-gap: 5px;
+  min-width: 100px;
+  background-color: var(--secondary-color);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.user_box .icon {
+  padding: 5px;
+  display: flex;
+  place-content: center;
+  place-items: center;
+}
+.user_box .user-info {
+  background-color: var(--primary-color);
+  height: 100%;
+  color: white;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  padding: 5px;
 }
 
 .homepage_container {

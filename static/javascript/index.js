@@ -1,12 +1,19 @@
 function openDialog() {
-    document.getElementById('dialogOverlay').classList.add('show');
+    window.location.href = '/login'
+
 }
 
 function closeDialog() {
     document.getElementById('dialogOverlay').classList.remove('show');
 }
 
+console.log(window.location.pathname)
 
+
+if(window.location.pathname.includes("login")){
+  document.getElementById('dialogOverlay').classList.add('show');
+
+}
 
 
 
@@ -37,3 +44,4 @@ const bmit = 37; // Example value for bmit
 }
 
 calculate_ticker()
+

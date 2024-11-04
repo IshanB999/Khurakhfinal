@@ -43,6 +43,17 @@
   .d-flex{
     display: flex;
   }
+
+  .no_list_style{
+    list-style: none;
+  }
+  .red{
+    color: red;
+  }
+
+  .sm_text{
+    font-size: 0.8rem;
+  }
   .m-auto{
     margin: auto;
   }
@@ -207,6 +218,33 @@
     }
 }
 
+
+.user_box{
+    // border: 1px solid black;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    column-gap: 5px;
+    min-width: 100px;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    overflow: hidden;
+    .icon{
+        padding: 5px;
+        display: flex;
+        place-content: center;
+        place-items: center;
+    }
+    .user-info{
+        background-color: var(--primary-color);
+        height: 100%;
+        color: white;
+        display: flex;
+        place-content: center;
+        place-items: center;
+        padding: 5px;
+    }
+}
 
 
 // homepage first design

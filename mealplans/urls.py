@@ -6,5 +6,7 @@ from . import views
 urlpatterns = [
     path('',views.index),
     path('signup/',views.signup,name="signup"),
-    path('bmi-calculator',views.bmi_calculator,name='calculator')
+    path('login/',views.login_view,name='login'),
+    path('bmi-calculator',views.bmi_calculator,name='calculator'),
+    path("logout",views.logout_view,name='logout'),
 ]
