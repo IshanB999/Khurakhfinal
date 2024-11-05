@@ -3,6 +3,27 @@ function openDialog() {
 
 }
 
+function openProfileDialog(){
+    document.getElementById('dialogOverlay2').classList.add('show');
+
+}
+
+function closeProfileDialog(){
+  document.getElementById('dialogOverlay2').classList.remove('show');
+
+}
+
+
+function openChangePassword(){
+  // document.getElementById('dialogOverlay3').classList.add('show');
+  window.location.href = '/profile/change-password'
+
+}
+function hideChangePassword(){
+  // window.history.back();
+  window.location.href = '/profile'
+
+}
 function closeDialog() {
     window.history.back();
     // document.getElementById('dialogOverlay').classList.remove('show');
@@ -15,6 +36,10 @@ if(window.location.pathname.includes("login")){
 
 }
 
+if(window.location.pathname.includes("change-password")){
+  document.getElementById('dialogOverlay3').classList.add('show');
+
+}
 
 
 

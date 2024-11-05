@@ -1,0 +1,39 @@
+{% extends 'main.html' %} {% block content %}
+
+{% include 'profile/profile.html' %}
+{% include 'profile/changepassword.html' %}
+
+<div class="user_dashboard_container">
+  <div class="header">
+    <!-- <h2 class="primary-black text-center mt-10">User Dashboard</h2> -->
+  </div>
+
+  <div class="profile_data_box primary-black">
+    <div class="data_box">
+        <div class="img_box">
+        <img src="https://th.bing.com/th/id/R.5c946a3dd2d883c5b441d2b4ddd03279?rik=EDqSksNTjDHPWg&pid=ImgRaw&r=0" alt="">
+
+        </div>
+        <div class="data">
+            <h1 class="text mt-5">{{profile_data.first_name}} {{profile_data.last_name}}</h1>
+            <p class="mt-10"> <span class="icon material-symbols-outlined">
+                mail
+                </span>{{profile_data.email}}</p>
+            <p class="mt-10"><span class=" icon material-symbols-outlined">
+                calendar_month
+                </span>Date of Birth : {{profile_data.date_of_birth}}</p>
+            <p class="mt-5"><span class="icon material-symbols-outlined">
+                settings_accessibility
+                </span>Height : {{profile_data.height_feet}}Ft {{profile_data.height_inch}}In</p>
+
+        <button class="global_btn mt-10" onclick="openProfileDialog()">Edit Profile Data</button>
+        <button class="global_btn outline mt-10" onclick="openChangePassword()">Change Password</button>
+        </div>
+    </div>
+
+    
+  </div>
+
+</div>
+
+{% endblock content %}

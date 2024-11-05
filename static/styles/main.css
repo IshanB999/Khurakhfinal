@@ -616,6 +616,14 @@ a {
 .form-control input {
   margin-top: 10px;
 }
+.form-control select {
+  height: 50px;
+  min-width: 50px;
+  border-radius: 5px;
+  font-size: 1rem;
+  border: 1px solid var(--primary-color);
+  color: var(--text-color-dark);
+}
 
 .form-flex {
   display: flex;
@@ -922,4 +930,94 @@ a {
   top: -60px;
   opacity: 1;
   transition-duration: 0.3s;
+}
+
+.user_dashboard_container {
+  min-height: 100vh;
+}
+.user_dashboard_container .dialog_sm {
+  padding: 50px;
+}
+.user_dashboard_container .header {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+}
+.user_dashboard_container .profile_data_box {
+  height: 40vh;
+  background-image: linear-gradient(30deg, green, lightgreen);
+  display: flex;
+  place-content: center;
+  place-items: center;
+  flex-direction: column;
+  position: relative;
+}
+.user_dashboard_container .profile_data_box .data_box {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
+  position: absolute;
+  bottom: -30%;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 1px 1px 10px var(--light-black);
+  border-radius: 20px;
+}
+.user_dashboard_container .profile_data_box .data_box .img_box {
+  height: 100%;
+  width: 40%;
+  display: flex;
+}
+.user_dashboard_container .profile_data_box .data_box .img_box img {
+  margin: auto;
+  height: 100%;
+  border: 1px solid black;
+  border-radius: 20%;
+}
+.user_dashboard_container .profile_data_box .data_box .data p {
+  font-size: 0.9rem;
+  display: flex;
+  place-items: center;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+}
+.user_dashboard_container .profile_data_box .data_box .data p .icon {
+  color: var(--primary-color);
+}
+.user_dashboard_container .profile_data_box .data_box .global_btn {
+  height: 40px;
+  min-width: 150px;
+}
+
+.changepassword .dialog_sm, .change_profile .dialog_sm {
+  padding: 40px;
+}
+.changepassword .dialog_sm form .gender_box, .change_profile .dialog_sm form .gender_box {
+  padding: 20px 0px;
+}
+.changepassword .dialog_sm form .gender_box input, .change_profile .dialog_sm form .gender_box input {
+  height: 20px;
+  width: 20px;
+}
+.changepassword .dialog_sm form .global_btn, .change_profile .dialog_sm form .global_btn {
+  height: 40px;
+}
+.changepassword .dialog_sm form .form-control, .change_profile .dialog_sm form .form-control {
+  position: relative;
+}
+.changepassword .dialog_sm form .form-control .over-input, .change_profile .dialog_sm form .form-control .over-input {
+  right: 20px;
+  position: absolute;
+  top: 50%;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+.changepassword .successfull_box, .change_profile .successfull_box {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
 }/*# sourceMappingURL=main.css.map */

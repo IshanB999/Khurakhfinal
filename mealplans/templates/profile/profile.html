@@ -1,0 +1,78 @@
+<div class="dialog_box dialog-overlay change_profile" id="dialogOverlay2">
+    <div class="dialog_sm dialog">
+        <h2 class="primary-black text-center">Edit Your Profile</h2>
+        <form action="{% url 'profile' %}" class="mt-10" method="POST">
+            {% csrf_token %}
+        
+            <input type="hidden" name="action" value="update_profile">
+            <div class="form-flex">
+                <div class="form-control">
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" class="base_input" required value="{{profile_data.first_name}}"/>
+                  </div>
+              
+                  <div class="form-control">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" class="base_input" required value="{{profile_data.last_name}}"/>
+                  </div>
+            </div>
+        
+            <div class="form-control gender_box">
+                <input type="radio" name="gender" value="male" id="male" required {% if profile_data.gender == "male" %}checked{% endif %}>
+                <label for="male">Male</label>
+                <input type="radio" name="gender" value="female" id="female" class="ml-10" required {% if profile_data.gender == "female" %}checked{% endif %}>
+                <label for="female">Female</label>
+            </div>
+        
+            <div class="form-control">
+              <label for="dob">Date Of Birth</label>
+        
+
+        
+             <div class="form-flex">
+                <select name="day" id="day">
+                    <option value="" >Select Day</option>
+                    <!-- Generate options for days 1-31 -->
+                    {% for day in date_options.days_list %}
+                    <option value="{{ day }}" {% if profile_data.dob.day == day %}selected{% endif %}>{{ day }}</option>
+                    {% endfor %}
+                  </select>
+            
+            
+                  <select name="month" id="month">
+                    <option value="" >Select Month</option>
+                    {% for month in date_options.months_list %}
+                    <option value="{{ month }}" {% if profile_data.dob.month == month %}selected{% endif %}>{{ month }}</option>
+                {% endfor %}
+                  </select>
+            
+                  <select name="year" id="year">
+                    <option value="">Select Year</option>
+                    <!-- Generate options for years (e.g., 1900 to 2024) -->
+                    {% for year in date_options.years_list %}
+                    <option value="{{ year }}" {% if profile_data.dob.year == year %}selected{% endif %}>{{ year }}</option>
+                {% endfor %}
+                  </select>
+            
+             </div>
+        
+             <label for="height" class="mt-10">Height</label>
+             <div class="form-flex">
+                <div class="form-control">
+                        <input type="number" name="height_feet" value="{{profile_data.height_feet}}" class="base_input">
+                        <p class="over-input">Feet</p>
+                 </div>
+        
+                 <div class="form-control">
+                    <input type="number" name="height_inch" value="{{profile_data.height_inch}}" class="base_input">
+                    <p class="over-input">Inch</p>
+             </div>
+             </div>
+        
+             <button class="global_btn mt-10">Update</button>
+             <button type="button" class="global_btn outline" onclick="closeProfileDialog()">Close</button>
+        
+            </div>
+          </form>
+    </div>
+  </div>
