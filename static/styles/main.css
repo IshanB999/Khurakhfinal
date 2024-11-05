@@ -655,7 +655,7 @@ a {
 
 .bmi_calculator_container {
   background-color: var(--secondary-color);
-  height: 80vh;
+  height: 100vh;
   padding: 0px 50px 50px 50px;
 }
 .bmi_calculator_container .header {
@@ -763,6 +763,9 @@ a {
   width: 200px;
   font-size: 1rem;
   background-color: var(--primary-color);
+}
+.bmi_calculator_container .active-label {
+  color: var(--primary-color);
 }
 .bmi_calculator_container .bmi-result-box {
   width: 50%;

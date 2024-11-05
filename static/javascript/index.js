@@ -18,9 +18,9 @@ if(window.location.pathname.includes("login")){
 
 
 
-function calculate_ticker(bmi=17){
+function calculate_ticker(bmi){
 
-const bmit = 37; // Example value for bmit
+const bmit = bmi; // Example value for bmit
 
   let targetWidth = 0;
 
@@ -43,7 +43,7 @@ const bmit = 37; // Example value for bmit
 
 }
 
-calculate_ticker()
+
 
 
 
@@ -56,3 +56,31 @@ function toggleDropdown(event) {
   dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
 }
 
+
+
+// gender select on bmi calculator
+
+function selectGender(gender) {
+  // Remove active class from both labels
+  document.getElementById("label-male").classList.remove("active-label");
+  document.getElementById("label-female").classList.remove("active-label");
+  
+  // Add active class to the selected label
+  document.getElementById("label-" + gender).classList.add("active-label");
+  
+  // Set the radio input to checked
+  document.getElementById(gender).checked = true;
+}
+
+
+
+// trigger the ticker of bmi box after form is submitted
+document.addEventListener("DOMContentLoaded", function() {
+  // Retrieve the BMI value from JSON data
+  const bmiValue = parseFloat(document.getElementById("bmi-data").textContent);
+
+  // console.log('bmi value',bmiValue)
+  if (!isNaN(bmiValue)) {
+      calculate_ticker(bmiValue);
+  }
+});

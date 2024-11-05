@@ -773,7 +773,7 @@ a{
 
 .bmi_calculator_container{
     background-color: var(--secondary-color);
-    height: 80vh;
+    height: 100vh;
     .header{
         display: flex;
         column-gap: 20px;
@@ -802,6 +802,7 @@ a{
 
     }
 
+    
     padding: 0px 50px 50px 50px;
     form{
         background-color: white;
@@ -899,6 +900,9 @@ a{
         }
     }
 
+    .active-label{
+        color: var(--primary-color);
+    }
     .bmi-result-box{
         width: 50%;
         height: 100%;

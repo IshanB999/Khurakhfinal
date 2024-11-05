@@ -16,56 +16,91 @@
     </div>
 
    <div class="size_manager">
-    <form action="">
-        <div class="gender form-box">
-            <label for="">Gender</label>
-            <div class="form-flex mt-5">
-                <div class="bmi_box active">Male</div>
-                <div class="bmi_box">Female</div>
+    <form action="" method="post">
+        {% csrf_token %}
+    <!-- Gender Selection -->
+    <div class="gender form-box">
+        <label for="">Gender</label>
+        <div class="form-flex mt-5">
+            <div class="bmi_box" onclick="selectGender('male')">
+                <label for="male" id="label-male" 
+                       class="{% if form_data.gender == 'male' %}active-label{% endif %}">
+                    Male
+                </label>
+                <input hidden type="radio" name="gender" id="male" value="male" 
+                       {% if form_data.gender == 'male' %}checked{% endif %}>
+            </div>
+            <div class="bmi_box" onclick="selectGender('female')">
+                <label for="female" id="label-female" 
+                       class="{% if form_data.gender == 'female' %}active-label{% endif %}">
+                    Female
+                </label>
+                <input hidden type="radio" name="gender" id="female" value="female" 
+                       {% if form_data.gender == 'female' %}checked{% endif %}>
             </div>
         </div>
-
-
-            <div class="form-box">
-                <label for="">Age</label>
-                <div class="cover-input mt-5">
-                    <input type="number" class="">
-                    <span>Years</span>
-                </div>
-                <p class="p-text-color">Between 2 years to 120 years</p>
-        </div>
-
-
-        <div class="form-box">
-            <label for="">Height</label>
-
-            <div class="form-flex height mt-10">
-                <input type="number" placeholder="Ft">
-
-            <input type="number" placeholder="In">
-            </div>
-        </div>
-
-
-        
-        <div class="form-box">
-            <label for="">Weight</label>
-            <div class="cover-input mt-5">
-                <input type="number" class="">
-                <span>In KGs</span>
-            </div>
     </div>
+
+    <!-- Age Input -->
+    <div class="form-box">
+        <label for="">Age</label>
+        <div class="cover-input mt-5">
+            <input type="number" class="" name="age" value="{{ form_data.age }}">
+            <span>Years</span>
+        </div>
+        <p class="p-text-color">Between 2 years to 120 years</p>
+    </div>
+
+    <!-- Height Input -->
+    <div class="form-box">
+        <label for="">Height</label>
+        <div class="form-flex height mt-10">
+            <input type="number" placeholder="Ft" name="height_feet" value="{{ form_data.height_feet }}">
+            <input type="number" placeholder="In" name="height_inch" value="{{ form_data.height_inch }}">
+        </div>
+    </div>
+
+    <!-- Weight Input -->
+    <div class="form-box">
+        <label for="">Weight</label>
+        <div class="cover-input mt-5">
+            <input type="number" class="" name="weight" value="{{ form_data.weight }}">
+            <span>In KGs</span>
+        </div>
+    </div>
+
+    {% if errors %}
+    <ul class="no_list_style">
+        {% for error in errors %}
+            <li class="red sm_text">{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
     <div class="align-item-middle button_box">
         <button class="global_btn simple rect">Calculate</button>
     </div>
+
+
     </form>
 
     <div class="bmi-result-box">
         <div class="sm">
             <div class="header">
                 <h2>Your BMI is</h2>
-                <h2 class="result">24.80</h2>
+                <h2 class="result">
+                    {% if bmi %}
+                        {{ bmi|floatformat:2 }}
+                        
+                    {% endif %}    <!-- Pass the BMI value as JSON data -->
+    {% if bmi is not None %}
+    <script type="application/json" id="bmi-data">
+        {{ bmi|floatformat:2 }}
+    </script>
+    {% endif %}
+
+
+                </h2>
 
             </div>
 
@@ -89,11 +124,18 @@
             </div>
         </div>
 
-        <div class="report">
-            <h2>Great Shape</h2>
+        <div class="report mt-15">
+            {% if header %}
+                <h2>{{ header }}</h2>
+            {% endif %}
 
-        <p>By maintaining a healthy weight, you lower your risk
-                           of developing serious health problems.</p>
+            {% if review %}
+                <p class="mt-10">{{ review }}</p>
+            {% endif %}
+
+            {% if weight_range %}
+                <p class="sm_text mt-10">{{weight_range}}</p>
+            {% endif %}
         </div>
         </div>
 
