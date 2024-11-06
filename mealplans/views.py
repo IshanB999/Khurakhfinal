@@ -501,3 +501,8 @@ def change_password(request):
         return render(request, 'profile/dashboard.html',{'password_success':True})  # Or the name of your main template
 
     return render(request, 'profile/dashboard.html')  # Or the name of your main template
+
+
+
+
+    

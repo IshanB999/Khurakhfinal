@@ -20,6 +20,8 @@ class Customer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return self.user.email
 
 
 
@@ -28,6 +30,18 @@ class Mood(models.TextChoices):
     NETURAL = 'netural'
     SAD = 'sad'
 
+class BmiRange(models.Model):
+    title = models.CharField(max_length=100)
+    gender = models.CharField(max_length=20,choices=Gender.choices)
+    top_bmi = models.DecimalField(max_digits=5, decimal_places=2,blank=True,null=True)
+    bottom_bmi = models.DecimalField(max_digits=5, decimal_places=2,blank=True,null=True)
+    description = models.TextField(blank=True,null=True)
+    is_less_then_top = models.BooleanField(default=False)
+    is_more_then_bottom = models.BooleanField(default=False)
+    def __str__(self) -> str:
+        return self.title
+
+
 class ProgressReport(models.Model):
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
     weight_kg = models.DecimalField("Weight (kg)", max_digits=5, decimal_places=2)
@@ -35,3 +49,31 @@ class ProgressReport(models.Model):
     comments = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+
+class MealPlan(models.Model):
+    name = models.CharField(max_length=100)
+    bmi_range= models.ForeignKey(BmiRange,on_delete=models.CASCADE)
+    description = models.TextField(blank=True,null=True)
+    breakfast = models.TextField(help_text="Breakfast meal recommendation.",blank=True,null=True)
+    lunch = models.TextField(help_text="Lunch meal recommendation.",blank=True,null=True)
+    dinner = models.TextField(help_text="Dinner meal recommendation.",blank=True,null=True)
+    snacks = models.TextField(help_text="Snack options for this meal plan.",blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+class Food(models.Model):
+    plan = models.ForeignKey(MealPlan,on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self) -> str:
+        return self.title
+    
