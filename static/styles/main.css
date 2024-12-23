@@ -1099,4 +1099,10 @@ a {
 .main_blog_container .blog-container {
   padding: 0;
   margin-top: 50px;
+}
+.main_blog_container .blog-container .img_banner_box {
+  height: 300px;
+}
+.main_blog_container .blog-container h1 {
+  margin-top: 20px;
 }/*# sourceMappingURL=main.css.map */

@@ -108,3 +108,52 @@ class BlogContents(models.Model):
                 return ' '.join(words[:15]) + ' ...'
         return self.description
 
+
+
+from django.db import models
+
+class MealCategory(models.TextChoices):
+    LOW_CARB = 'Low Carb', 'Low Carb'
+    VEG = 'Vegetarian', 'Vegetarian'
+    VEGAN = 'Vegan', 'Vegan'
+    NON_VEG = 'Non-Vegetarian', 'Non-Vegetarian'
+
+class Meal(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    calories = models.DecimalField(max_digits=6, decimal_places=2)  # Calories per serving
+    protein = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    carbs = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    fats = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    category = models.CharField(max_length=20, choices=MealCategory.choices)
+    image = models.ImageField(upload_to='meals/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class PredefinedMealPlan(models.Model):
+    category = models.CharField(max_length=20, choices=MealCategory.choices, unique=True)
+    description = models.TextField(blank=True, null=True)  # Optional notes about the plan
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.category} Plan"
+
+class PredefinedDailyMeal(models.Model):
+    plan = models.ForeignKey(PredefinedMealPlan, on_delete=models.CASCADE, related_name='daily_meals')
+    day = models.CharField(max_length=10, choices=[
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
+    ])
+    breakfast = models.ForeignKey(Meal, on_delete=models.SET_NULL, null=True, related_name='default_breakfast_meals')
+    lunch = models.ForeignKey(Meal, on_delete=models.SET_NULL, null=True, related_name='default_lunch_meals')
+    dinner = models.ForeignKey(Meal, on_delete=models.SET_NULL, null=True, related_name='default_dinner_meals')
+    snacks = models.ManyToManyField(Meal, related_name='default_snack_meals', blank=True)
+
+    def __str__(self):
+        return f"{self.plan.category} - {self.day}"

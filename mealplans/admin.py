@@ -73,3 +73,21 @@ class BlogContentsAdmin(admin.ModelAdmin):
     search_fields = ('header',)
     list_filter = ('created_at', 'updated_at')
     ordering = ('-created_at',)
+
+
+
+
+@admin.register(models.Meal)
+class MealAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category', 'calories')
+    search_fields = ('name', 'category')
+
+@admin.register(models.PredefinedMealPlan)
+class PredefinedMealPlanAdmin(admin.ModelAdmin):
+    list_display = ('category', 'created_at')
+    search_fields = ('category',)
+
+@admin.register(models.PredefinedDailyMeal)
+class PredefinedDailyMealAdmin(admin.ModelAdmin):
+    list_display = ('plan', 'day', 'breakfast', 'lunch', 'dinner')
+    list_filter = ('plan', 'day')
