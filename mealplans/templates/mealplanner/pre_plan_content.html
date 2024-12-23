@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+{% load static  %}
+
+{% block content %}
+
+   <div class="meal_planner_content">
+    <div class="blog-container">
+        <div class="img_banner_box two">
+            {% if data.image %}
+            <img src="{{data.image.url}}" alt="{{content.title}}">
+            {% else %}
+            <img src="https://picsum.photos/900/300/" alt="">
+            {% endif %}
+        </div>
+        <h1 class="header">{{data.title}}</h1>
+
+        <p class="title_desc">{{data.description}}</p>
+
+    </div>
+
+
+    <div class="popular_plans box_container">
+
+        {% for content in meal_plans%}
+        <a href="{% url 'daily-plan-content' content.id %}" class="content_box">
+            <div class="img_box">
+                {% if content.image %}
+                <img src="{{content.image.url}}" alt="{{content.title}}">
+                {% else %}
+                <img src="https://picsum.photos/200/20{{forloop.counter}}/" alt="">
+                {% endif %}
+            </div>
+            <h3 class="content_header">{{content.title}}</h3>
+            <p class="short_description">{{content.description}}</p>
+        </a>
+    {% endfor %}
+    </div>
+
+
+   </div>
+{% endblock content %}

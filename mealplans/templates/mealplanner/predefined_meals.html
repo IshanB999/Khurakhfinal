@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+
+{% block content  %}
+
+<div class="meal_planner_container">
+    <h1>Meal Plans</h1>
+
+    <div class="plan_list">
+        <div class="list_box">
+            {% for content in meal_plans%}
+            <a href="{% url 'pre-meal-plan-content' content.id %}" class="content_box">
+                <p class="content_header">{{content.title}}</p>
+                <!-- <p class="short_description">{{content.description}}</p> -->
+            </a>
+        {% endfor %}
+        </div>
+    </div>
+
+    <h1 class="popular_header">Popular Meal Plans</h1>
+
+    <div class="popular_plans box_container">
+        {% for content in popular_plans%}
+        <a href="{% url 'daily-plan-content' content.id %}" class="content_box">
+            <div class="img_box">
+                {% if content.image.url%}
+                <img src="{{content.image.url}}" alt="{{content.title}}">
+                {% else %}
+                <img src="https://picsum.photos/200/20{{forloop.counter}}/" alt="">
+                {% endif %}
+            </div>
+            <h3 class="content_header">{{content.title}}</h3>
+            <p class="short_description">{{content.description}}</p>
+        </a>
+    {% endfor %}
+    </div>
+</div>
+{% endblock content %}

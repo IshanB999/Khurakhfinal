@@ -17,5 +17,8 @@ urlpatterns = [
 
     path('blogs/',views.blog_view,name='blog-view'),
     path('blogs/<int:pk>/',views.blog_content_view,name='blog-content-view'),
+    path('meal-planner/',views.pre_meal_plan_view,name='pre-meal-plan'),
+    path('meal-planner/<int:pk>/',views.pre_meal_plan_content_view,name='pre-meal-plan-content'),
+    path('plan/<int:pk>/',views.daily_plan_view,name='daily-plan-content'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

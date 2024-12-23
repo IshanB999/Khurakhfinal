@@ -4,7 +4,15 @@ from django.contrib.auth.models import User
 from .models import (
     Customer,
     Blog,
-    BlogContents
+    BlogContents,
+    Plan,
+    MealPlan,
+    DailyPlan,
+    Meal,
+    MealPlanDescription
+    # Meal,
+    # PredefinedDailyMeal,
+    # PredefinedMealPlan,
 )
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import login,authenticate,logout
@@ -523,3 +531,31 @@ def blog_content_view(request,pk):
     related_contents = BlogContents.objects.exclude(pk=pk)[:3]
 
     return render(request,'blog/blog_content_view.html',{'data':blog_content,'contents':related_contents})
+
+
+
+def pre_meal_plan_view(request):
+    plans = Plan.objects.all()
+    popular_meal_plans = MealPlan.objects.filter(is_popular=True)
+    print(popular_meal_plans)
+    return render(request,'mealplanner/predefined_meals.html',{'meal_plans':plans,'popular_plans':popular_meal_plans,})
+
+
+
+def pre_meal_plan_content_view(request,pk):
+    data = get_object_or_404(Plan,pk=pk)
+    meal_plans = MealPlan.objects.filter(plan=data)
+
+    return render(request,'mealplanner/pre_plan_content.html',{'data':data,'meal_plans':meal_plans})
+
+
+
+def daily_plan_view(request,pk):
+    data = get_object_or_404(MealPlan,pk=pk)
+    daily_plans = DailyPlan.objects.prefetch_related('meals').filter(mealplan=data)
+    plans_descriptions = MealPlanDescription.objects.filter(plan=data)
+    
+    grouped_
+    
+    print(plans_descriptions)
+    return render(request,'mealplanner/daily_plan_view.html',{'data':data,'daily_plans':daily_plans,'descriptions':plans_descriptions})

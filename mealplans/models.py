@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+
 # Create your models here.
 
 
@@ -52,33 +54,6 @@ class ProgressReport(models.Model):
 
 
 
-class MealPlan(models.Model):
-    name = models.CharField(max_length=100)
-    bmi_range= models.ForeignKey(BmiRange,on_delete=models.CASCADE)
-    description = models.TextField(blank=True,null=True)
-    breakfast = models.TextField(help_text="Breakfast meal recommendation.",blank=True,null=True)
-    lunch = models.TextField(help_text="Lunch meal recommendation.",blank=True,null=True)
-    dinner = models.TextField(help_text="Dinner meal recommendation.",blank=True,null=True)
-    snacks = models.TextField(help_text="Snack options for this meal plan.",blank=True,null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return self.name
-
-class Food(models.Model):
-    plan = models.ForeignKey(MealPlan,on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True,null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-    def __str__(self) -> str:
-        return self.title
-    
-
-
 
 class Blog(models.Model):
     header = models.CharField(max_length=100)
@@ -110,50 +85,141 @@ class BlogContents(models.Model):
 
 
 
-from django.db import models
 
-class MealCategory(models.TextChoices):
-    LOW_CARB = 'Low Carb', 'Low Carb'
-    VEG = 'Vegetarian', 'Vegetarian'
+# meal planner
+
+class Plan(models.Model):
+    title = models.CharField(max_length=200)
+    header_text = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='images/plan/',blank=True,null=True)
+    description = models.TextField(blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_popular = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.title
+
+
+
+class MealPlan(models.Model):
+    title = models.CharField(max_length=200)
+    plan = models.ForeignKey(Plan,on_delete=models.CASCADE,related_name='meal_plans')
+    image = models.ImageField(upload_to='images/plan/meal/',blank=True,null=True)
+    description = models.TextField(blank=True,null=True)
+    is_popular = models.BooleanField(default=False)
+    total_days = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+
+class MealPlanDescription(models.Model):
+    plan = models.ForeignKey(MealPlan,on_delete=models.CASCADE,related_name='meal_plan_descriptions')
+    header = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='images/plan/meal/description/',blank=True,null=True)
+    description = models.TextField(blank=True,null=True)
+    list_item = models.JSONField(blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.header
+
+class DayChoices(models.IntegerChoices):
+    DAY1 = 1, 'Day 1'
+    DAY2 = 2, 'Day 2'
+    DAY3 = 3, 'Day 3'
+    DAY4 = 4, 'Day 4'
+    DAY5 = 5, 'Day 5'
+    DAY6 = 6, 'Day 6'
+    DAY7 = 7, 'Day 7'
+    DAY8 = 8, 'Day 8'
+    DAY9 = 9, 'Day 9'
+    DAY10 = 10, 'Day 10'
+    DAY11 = 11, 'Day 11'
+    DAY12 = 12, 'Day 12'
+    DAY13 = 13, 'Day 13'
+    DAY14 = 14, 'Day 14'
+    DAY15 = 15, 'Day 15'
+    DAY16 = 16, 'Day 16'
+    DAY17 = 17, 'Day 17'
+    DAY18 = 18, 'Day 18'
+    DAY19 = 19, 'Day 19'
+    DAY20 = 20, 'Day 20'
+    DAY21 = 21, 'Day 21'
+    DAY22 = 22, 'Day 22'
+    DAY23 = 23, 'Day 23'
+    DAY24 = 24, 'Day 24'
+    DAY25 = 25, 'Day 25'
+    DAY26 = 26, 'Day 26'
+    DAY27 = 27, 'Day 27'
+    DAY28 = 28, 'Day 28'
+    DAY29 = 29, 'Day 29'
+    DAY30 = 30, 'Day 30'
+
+
+class DailyPlan(models.Model):
+    title = models.CharField(max_length=255)
+    mealplan = models.ForeignKey(MealPlan,on_delete=models.CASCADE,related_name='daily_meals')
+    day = models.IntegerField(choices=DayChoices.choices)
+    image = models.ImageField(upload_to='images/plan/meal/',blank=True,null=True)
+    description = models.TextField(blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+            # Check if the current day is the next day in sequence
+            if self.day != 1:
+                previous_day_exists = DailyPlan.objects.filter(day=self.day - 1).exists()
+                if not previous_day_exists:
+                    raise ValidationError(f"You cannot create a meal for Day {self.day} until Day {self.day - 1} has been created.")
+
+    def save(self, *args, **kwargs):
+        # Call the clean method to validate
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
+class MealType(models.TextChoices):
+    BREAKFAST = 'Breakfast', 'Breakfast'
+    LUNCH = 'Lunch', 'Lunch'
+    SNACKS = 'Snacks', 'Snacks'
+    DINNER = 'Dinner', 'Dinner'
+
+class FoodType(models.TextChoices):
     VEGAN = 'Vegan', 'Vegan'
-    NON_VEG = 'Non-Vegetarian', 'Non-Vegetarian'
+    VEGETARIAN = 'Vegetarian', 'Vegetarian'
+    NON_VEG = 'Non-Veg', 'Non-Veg'
+
 
 class Meal(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-    calories = models.DecimalField(max_digits=6, decimal_places=2)  # Calories per serving
+    daily_plan = models.ForeignKey(DailyPlan,on_delete=models.CASCADE,related_name='meals')
+    meal_type = models.CharField(max_length=20, choices=MealType.choices)
+    food_type = models.CharField(max_length=20, choices=FoodType.choices)
+    description = models.TextField(blank=True,null=True)
+    image = models.ImageField(upload_to='images/plan/meal/',blank=True,null=True)
+    food_list = models.JSONField(blank=True,null=True)
+    calories = models.DecimalField(max_digits=6, decimal_places=2,blank=True,null=True)  # Calories per serving
     protein = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     carbs = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     fats = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-    category = models.CharField(max_length=20, choices=MealCategory.choices)
-    image = models.ImageField(upload_to='meals/', blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-class PredefinedMealPlan(models.Model):
-    category = models.CharField(max_length=20, choices=MealCategory.choices, unique=True)
-    description = models.TextField(blank=True, null=True)  # Optional notes about the plan
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def clean(self):
+        # Ensure only one meal of each type and food type can be created per DailyPlan
+        if Meal.objects.filter(daily_plan=self.daily_plan, meal_type=self.meal_type, food_type=self.food_type).exists():
+            raise ValidationError(f"A {self.get_meal_type_display()} meal of {self.get_food_type_display()} type has already been created for Day {self.daily_plan.day}. You can only have one of each meal type and food type per day.")
 
+    def save(self, *args, **kwargs):
+        # Call the clean method to validate
+        self.clean()
+        super().save(*args, **kwargs)     
     def __str__(self):
-        return f"{self.category} Plan"
-
-class PredefinedDailyMeal(models.Model):
-    plan = models.ForeignKey(PredefinedMealPlan, on_delete=models.CASCADE, related_name='daily_meals')
-    day = models.CharField(max_length=10, choices=[
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-        ('Saturday', 'Saturday'),
-        ('Sunday', 'Sunday'),
-    ])
-    breakfast = models.ForeignKey(Meal, on_delete=models.SET_NULL, null=True, related_name='default_breakfast_meals')
-    lunch = models.ForeignKey(Meal, on_delete=models.SET_NULL, null=True, related_name='default_lunch_meals')
-    dinner = models.ForeignKey(Meal, on_delete=models.SET_NULL, null=True, related_name='default_dinner_meals')
-    snacks = models.ManyToManyField(Meal, related_name='default_snack_meals', blank=True)
-
-    def __str__(self):
-        return f"{self.plan.category} - {self.day}"
+            return f"{self.get_meal_type_display()} for Day {self.daily_plan.day} of {self.daily_plan.title}"

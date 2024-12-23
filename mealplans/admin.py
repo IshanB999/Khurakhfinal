@@ -44,22 +44,8 @@ class ProgressReportAdmin(admin.ModelAdmin):
     list_filter = ('mood', 'created_at')
     search_fields = ('customer__name', 'comments')  # Assuming Customer model has a 'name' field
 
-# Admin configuration for MealPlan model
-@admin.register(models.MealPlan)
-class MealPlanAdmin(admin.ModelAdmin):
-    list_display = ('name', 'bmi_range', 'created_at')
-    list_filter = ('bmi_range',)
-    search_fields = ('name', 'description')
-    # readonly_fields = ('created_at', 'updated_at')  # To prevent editing timestamps
 
-# Admin configuration for Food model
-@admin.register(models.Food)
-class FoodAdmin(admin.ModelAdmin):
-    list_display = ('title', 'plan', 'created_at')
-    list_filter = ('plan',)
-    search_fields = ('title', 'description')
-    # readonly_fields = ('created_at', 'updated_at')
-    
+
 @admin.register(models.Blog)
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('header', 'created_at', 'updated_at')
@@ -77,17 +63,62 @@ class BlogContentsAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(models.Meal)
+
+
+# Register Plan model
+class PlanAdmin(admin.ModelAdmin):
+    list_display = ('title', 'header_text', 'is_popular', 'created_at', 'updated_at')
+    search_fields = ('title', 'header_text')
+    list_filter = ('is_popular',)
+    ordering = ('-created_at',)
+    
+admin.site.register(models.Plan, PlanAdmin)
+
+
+class MealPlanDescriptionInline(admin.TabularInline):  # Use TabularInline for a compact view
+    model = models.MealPlanDescription
+    extra = 1  # Number of empty forms displayed for adding new descriptions
+    fields = ['header', 'image', 'description', 'list_item']
+    readonly_fields = ['created_at', 'updated_at']  # Optional: Make timestamps read-only
+
+
+# Register MealPlan model
+class MealPlanAdmin(admin.ModelAdmin):
+    inlines = [MealPlanDescriptionInline]
+    list_display = ('title', 'plan', 'is_popular', 'total_days', 'created_at', 'updated_at')
+    search_fields = ('title', 'plan__title')
+    list_filter = ('is_popular',)
+    ordering = ('-created_at',)
+
+admin.site.register(models.MealPlan, MealPlanAdmin)
+
+
+
+
+# Register MealPlanDescription model
+class MealPlanDescriptionAdmin(admin.ModelAdmin):
+    list_display = ('header', 'plan', 'created_at', 'updated_at')
+    search_fields = ('header', 'plan__title')
+    ordering = ('-created_at',)
+
+admin.site.register(models.MealPlanDescription, MealPlanDescriptionAdmin)
+
+
+# Register DailyPlan model
+class DailyPlanAdmin(admin.ModelAdmin):
+    list_display = ('title', 'mealplan', 'day', 'created_at', 'updated_at')
+    search_fields = ('title', 'mealplan__title')
+    list_filter = ('mealplan', 'day')
+    ordering = ('mealplan', 'day')
+
+admin.site.register(models.DailyPlan, DailyPlanAdmin)
+
+
+# Register Meal model
 class MealAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'calories')
-    search_fields = ('name', 'category')
+    list_display = ('meal_type', 'daily_plan','food_type','calories','protein','carbs','fats', 'created_at', 'updated_at')
+    search_fields = ('meal_type', 'daily_plan__title')
+    list_filter = ('meal_type','food_type')
+    ordering = ('-created_at',)
 
-@admin.register(models.PredefinedMealPlan)
-class PredefinedMealPlanAdmin(admin.ModelAdmin):
-    list_display = ('category', 'created_at')
-    search_fields = ('category',)
-
-@admin.register(models.PredefinedDailyMeal)
-class PredefinedDailyMealAdmin(admin.ModelAdmin):
-    list_display = ('plan', 'day', 'breakfast', 'lunch', 'dinner')
-    list_filter = ('plan', 'day')
+admin.site.register(models.Meal, MealAdmin)

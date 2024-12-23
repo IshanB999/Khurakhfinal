@@ -1,0 +1,111 @@
+{% extends 'main.html' %}
+
+{% load static  %}
+
+{% block content %}
+
+   <div class="meal_planner_content">
+    <div class="blog-container">
+        <div class="img_banner_box two">
+            {% if data.image %}
+            <img src="{{data.image.url}}" alt="{{content.title}}">
+            {% else %}
+            <img src="https://picsum.photos/900/300/" alt="">
+            {% endif %}
+        </div>
+        <h1 class="header">{{data.title}}</h1>
+
+        <p class="title_desc">{{data.description}}</p>
+
+    </div>
+
+
+    <div class="planner_descriptions_box">
+        {% for description in descriptions %}
+            <div class="box {% if forloop.counter|divisibleby:2 %}reverse{% endif %}">
+                <div class="box1">
+                    <h3 class="capitalize header">{{description.header}}</h3>
+                    <p class="text">{{description.description}}</p>
+                </div>
+                {% if description.image %}
+                    <div class="image_box">
+                        <img src="{{description.image.url}}" alt="{{data.title}}">
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <!-- <div class="popular_plans box_container">
+        {% for content in meal_plans%}
+        <a href="{% url 'pre-meal-plan-content' content.id %}" class="content_box">
+            <div class="img_box">
+                {% if content.image %}
+                <img src="{{content.image.url}}" alt="{{content.title}}">
+                {% else %}
+                <img src="https://picsum.photos/200/20{{forloop.counter}}/" alt="">
+                {% endif %}
+            </div>
+            <h3 class="content_header">{{content.title}}</h3>
+            <p class="short_description">{{content.description}}</p>
+        </a>
+    {% endfor %}
+    </div> -->
+
+
+    <div class="planner_sidebar_container">
+        <div class="planner_sidebar content ">
+            <h3>In This Article</h3>
+            <ul id="sidebar-links">
+                <li><a href="#meal-prep-tips" class="sidebar-link">Meal Prep Tips</a></li>
+                {% for meals in daily_plans %}
+                    <li><a href="#day{{forloop.counter}}" class="sidebar-link">Day {{forloop.counter}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div id="content" class="content data_body">
+            <h2 id="meal-prep-tips">Meal Prep Tips</h2>
+            <p>Content for Meal Prep Tips...</p>
+            {% for daily_plan in daily_plans %}
+                <div id="day{{forloop.counter}}" class="content_box">
+                    <h2>{{daily_plan}}</h2>
+                    <P>{{daily_plan.description}}</P>
+                    
+                </div>
+            {% endfor %}
+            <!-- Add remaining days -->
+        </div>
+       </div>
+
+   </div>
+
+
+
+
+
+
+   <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll(".sidebar-link");
+    const sections = Array.from(links).map(link => document.querySelector(link.getAttribute("href")));
+
+    window.addEventListener("scroll", () => {
+        let currentIndex = sections.findIndex(section => 
+            section.offsetTop <= window.scrollY + window.innerHeight / 2 &&
+            section.offsetTop + section.offsetHeight > window.scrollY + window.innerHeight / 2
+        );
+
+        links.forEach((link, index) => {
+            if (index === currentIndex) {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
+    });
+});
+   </script>
+{% endblock content %}
