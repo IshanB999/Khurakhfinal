@@ -515,3 +515,11 @@ def blog_view(request):
     blog_content = BlogContents.objects.all()
 
     return render(request,'blog/blog_view.html',{'blog':blog,'contents':blog_content})
+
+
+
+def blog_content_view(request,pk):
+    blog_content = get_object_or_404(BlogContents,pk=pk)
+    related_contents = BlogContents.objects.exclude(pk=pk)[:3]
+
+    return render(request,'blog/blog_content_view.html',{'data':blog_content,'contents':related_contents})

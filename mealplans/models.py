@@ -100,4 +100,11 @@ class BlogContents(models.Model):
 
     def __str__(self):
         return self.header
+    
+    def short_description(self):
+        if self.description:
+            words = self.description.split()
+            if len(words) > 15:
+                return ' '.join(words[:15]) + ' ...'
+        return self.description
 

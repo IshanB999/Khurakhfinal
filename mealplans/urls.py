@@ -16,5 +16,6 @@ urlpatterns = [
     # blog
 
     path('blogs/',views.blog_view,name='blog-view'),
+    path('blogs/<int:pk>/',views.blog_content_view,name='blog-content-view'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

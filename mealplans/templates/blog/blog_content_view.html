@@ -4,13 +4,16 @@
 
 {% block content %}
 
-    <div class="blog-container">
-        <h1 class="txt-center">Blog</h1>
-        <div class="img_banner_box">
-            <img src="{{blog.banner_image.url}}" alt="">
+    <div class="main_blog_container">
+        <div class="blog-container">
+            <div class="img_banner_box">
+                <img src="{{data.image.url}}" alt="">
+            </div>
+            <h1 class="txt-center">{{data.header}}</h1>
+    
+            <p class="blog_description">{{data.description}}</p>
+    
         </div>
-
-        <p class="blog_description">{{blog.description}}</p>
         <div class="box_container">
             {% for content in contents%}
                 <a href="{% url 'blog-content-view' content.id %}" class="content_box">
@@ -23,5 +26,6 @@
             {% endfor %}
         </div>
     </div>
+
 
 {% endblock content %}
