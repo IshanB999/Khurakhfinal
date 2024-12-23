@@ -34,6 +34,31 @@
     
   </div>
 
+
+  <div class="my_meals">
+    <h2 class="profile_plan_header">My Plans</h2>
+
+  <div class="box_container">
+    {% for content in my_plans %}
+        <a href="{% url 'daily-plan-content' content.plan.id %}" class="content_box">
+            <div class="img_box">
+                <img src="{{content.plan.image.url}}" alt="">
+            </div>
+            <h3 class="content_header">{{content.plan.title}}</h3>
+            <p class="short_description">{{content.plan.description}}</p>
+
+            <p class="short_description">Started AT - {{content.start_date}}</p>
+
+            {% if content.is_expired %}
+              <p class="short_description">Status - Expired</p>
+            {% else %}
+            <p class="short_description">Status - Not Started Yet</p>
+            {% endif %}
+
+          {% endfor %}
+</div>
+
+  </div>
 </div>
 
 {% endblock content %}

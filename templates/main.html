@@ -15,6 +15,16 @@
 
     {% include 'auth/login.html' %}
 
+    {% if messages %}
+    {% for message in messages %}
+      <script>
+          document.addEventListener("DOMContentLoaded",function(){
+              showSnackBar('{{message}}','success')
+          })
+      </script>
+    {% endfor %}
+  {% endif %}
+
     {% block content %}
 
     {% endblock %}

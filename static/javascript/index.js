@@ -8,6 +8,16 @@ function openProfileDialog(){
 
 }
 
+
+function openMealRegistration(){
+  document.getElementById('dialogOverlay3').classList.add('show');
+
+}
+
+function closeDialogRegistration(){
+  document.getElementById('dialogOverlay3').classList.remove("show")
+}
+
 function closeProfileDialog(){
   document.getElementById('dialogOverlay2').classList.remove('show');
 
@@ -109,3 +119,106 @@ document.addEventListener("DOMContentLoaded", function() {
       calculate_ticker(bmiValue);
   }
 });
+
+
+// 
+
+
+class SnackBar{
+  constructor() {
+    // Create a container for all snackbars if it doesn't exist
+    if (!document.querySelector('.snackbar-container')) {
+        const container = document.createElement('div');
+        container.classList.add('snackbar-container');
+        document.body.appendChild(container);
+    }
+    this.container = document.querySelector('.snackbar-container');
+}
+
+showSnack(message, type) {
+  // Create a new snackbar element
+  const snackbar = document.createElement('div');
+  snackbar.classList.add('snackbar');
+  if (type) {
+      snackbar.classList.add(type); // Add type-specific class (e.g., success, error)
+  }
+  snackbar.textContent = message;
+
+  // Append snackbar to the container
+  this.container.appendChild(snackbar);
+
+  // Trigger fade-in effect
+  setTimeout(() => {
+      snackbar.classList.add('show');
+  }, 10);
+
+  // Automatically hide the snackbar after 3 seconds
+  setTimeout(() => {
+      this.hide(snackbar);
+  }, 3000);
+}
+  hide(snackbar) {
+    // snackbar.classList.remove('show');
+    snackbar.classList.add('hide');
+    // snackbar.style.display = 'none'
+
+    setTimeout(()=>{
+      snackbar.remove()
+    },500)
+}
+}
+
+const snack = new SnackBar();
+
+
+function showSnackBar(message='Testing the javascript snackbar',type='success'){
+
+
+snack.showSnack(message,type)
+setTimeout(()=>{
+    snack.hide()
+},4000)
+}
+
+
+
+
+
+// const responseMessage = document.getElementById('response-message');
+
+const handleSubmitPlanRegistration = async (event,id) => {
+    event.preventDefault();  // Prevent form from submitting the traditional way
+    const form = document.getElementById('register-plan-form');
+
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch(`/create-plan/${id}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            }
+        });
+        
+        const result = await response.json();
+
+        if (response.ok) {
+            // Display success message
+            snack.showSnack(message="Successfully Registered this plan to your profile",type='success')
+            closeDialogRegistration();
+
+            setTimeout(()=>{
+              window.location.reload()
+            },1000)
+        } else {
+            // Display error message
+            snack.showSnack(message=result.message || 'Something Went Wrong',type='error')
+
+        }
+    } catch (error) {
+        // snack.showSnack(message=result.message || 'Something Went Wrong',type='error')
+        console.log('error',error)
+
+    }
+};

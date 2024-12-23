@@ -9,7 +9,8 @@ from .models import (
     MealPlan,
     DailyPlan,
     Meal,
-    MealPlanDescription
+    MealPlanDescription,
+    CustomerRegisteredPlan
     # Meal,
     # PredefinedDailyMeal,
     # PredefinedMealPlan,
@@ -21,6 +22,8 @@ import json
 from django.http import JsonResponse
 from django.views import View
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from datetime import date
 
 # Create your views here.
 
@@ -61,6 +64,8 @@ def signup(request):
         customer = Customer.objects.create(user=user)
         
         # Log the user in and redirect to a success or home page
+        messages.success(request,"Successfully Created a user and Logged in")
+
         login(request, user)
         return redirect('/')  # Replace 'home' with your actual redirect URL
     
@@ -433,9 +438,16 @@ class DashboardView(View):
             'height_feet':profile_data.height_feet,
             'height_inch':profile_data.height_inches
         }
+
+        my_plans = CustomerRegisteredPlan.objects.filter(customer=request.user.customer)
+
+        
+
+
         context = {
             'profile_data':representation,
-            'date_options':date_options
+            'date_options':date_options,
+            'my_plans':my_plans
         }
         return render(request,self.template_name,context)
     
@@ -548,14 +560,42 @@ def pre_meal_plan_content_view(request,pk):
 
     return render(request,'mealplanner/pre_plan_content.html',{'data':data,'meal_plans':meal_plans})
 
-
-
+@login_required
 def daily_plan_view(request,pk):
     data = get_object_or_404(MealPlan,pk=pk)
     daily_plans = DailyPlan.objects.prefetch_related('meals').filter(mealplan=data)
     plans_descriptions = MealPlanDescription.objects.filter(plan=data)
     
-    grouped_
-    
+    already_registered = False
+    customer = request.user.customer
+    # Check if the customer is already registered for this plan
+    if CustomerRegisteredPlan.objects.filter(customer=customer, plan=data).exists():
+        already_registered = True
+        
     print(plans_descriptions)
-    return render(request,'mealplanner/daily_plan_view.html',{'data':data,'daily_plans':daily_plans,'descriptions':plans_descriptions})
+    return render(request,'mealplanner/daily_plan_view.html',{'data':data,'daily_plans':daily_plans,'descriptions':plans_descriptions,'registered':already_registered,})
+
+
+
+@login_required
+def create_customer_plan(request, pk):
+    if request.method == 'POST':
+        # Fetch the MealPlan
+        plan = get_object_or_404(MealPlan, pk=pk)
+        customer = request.user.customer  # Assuming the user is linked to a Customer model
+        start_date = request.POST.get('start_date', date.today())  # Use provided start_date or default to today
+
+        # Check if the customer already has this plan
+        if CustomerRegisteredPlan.objects.filter(customer=customer, plan=plan).exists():
+            return JsonResponse({'error': 'You are already registered for this plan.'}, status=400)
+
+        # Create the CustomerRegisteredPlan
+        CustomerRegisteredPlan.objects.create(
+            customer=customer,
+            plan=plan,
+            start_date=start_date,
+            is_current_plan=True
+        )
+        return JsonResponse({'message': 'Plan registered successfully.'})
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=405)

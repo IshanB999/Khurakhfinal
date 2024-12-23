@@ -1053,7 +1053,7 @@ a{
     }
     75% {
       transform: scale3d(0.95, 1.05, 1);
-    }
+}
     100% {
       transform: scale3d(1, 1, 1);
     }
@@ -1455,14 +1455,60 @@ a{
    }
 
    .planner_sidebar_container{
-    border: 1px solid black;
+    // border: 1px solid black;
     display: flex;
     gap: 20px;
+
     .content{
+        color: var(--light-black);
+        
         .content_box{
-            border: 1px solid black;
+            // border: 1px solid black;
+            // background-color: rgb(226, 226, 226);
             min-height: 100px;
             margin-bottom: 20px;
+            // padding: 40px;
+            border-radius: 10px;
+
+            .type_header{
+                font-weight: 500;
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
+            .data_box{
+                // border: 1px solid black;
+                // width: 50%;
+                margin-left: 20px;
+                margin-bottom: 20px;
+                margin-top: 10px;
+                display: flex;
+                // justify-content: space-between;
+                // place-content: center;
+                place-items: center;
+                gap: 30px;
+                .foods{
+                    // border: 1px solid black;
+                    margin-left: 20px;
+                    width: 40%;
+                    list-style-image: linear-gradient(green,green);
+
+                }
+                
+                .nutrition_count{
+                    // border: 1px solid black;
+                    list-style: none;
+                    padding: 20px;
+                    border-radius: 10px;
+                    background-color: rgb(242, 242, 242);
+                    li{
+                        font-size: 0.9rem;
+                    }
+
+                    p{
+                        margin-bottom: 10px;
+                    }
+                }
+            }
         }
         &.planner_sidebar{
 
@@ -1519,4 +1565,77 @@ a{
             }
         }
     }
+}
+
+
+
+.snackbar-container {
+    position: fixed;
+    bottom: 20px;
+    left: 200px;
+    transform: translateX(-150px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+  }
+  /* Snack Bar Styling */
+  .snackbar {
+    visibility: hidden;
+    width: 300px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    // transform: translateX(-50%);
+    font-size: 17px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.5s ease, top 0.5s ease;
+    // border: 2px solid var(--primary-color);
+    box-shadow: 1px 1px 10px gray;
+    
+    
+  
+    /* Close Button */
+    #close-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+    }
+  
+    /* Bouncy Effect Animation */
+    &.show {
+      visibility: visible;
+      opacity: 1;
+      animation: bounceIn 0.6s ease-out forwards;
+    }
+    &.success{
+      // border: 3px solid green;
+      background-color: rgb(1, 108, 1);
+    }
+    &.error{
+      background-color: var(--error-red);
+    }
+  
+    &.hide {
+      visibility: visible;
+      opacity: 1;
+      animation: bounceOut 0.6s ease-in forwards;
+    }
+  }
+
+.my_meals{
+    .profile_plan_header{
+        margin-top: 150px;
+        text-align: center;
+    }
+    padding: 0px 80px;
 }

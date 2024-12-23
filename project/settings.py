@@ -27,6 +27,10 @@ SECRET_KEY = 'django-insecure-(e2i)0e@m9qufx=qkik4erh%tz^vvx-ouk-mdz_&ls@=e(w5hq
 DEBUG = True
 
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://advanced-robin-hopelessly.ngrok-free.app'
+]
+
 
 # Application definition
 
@@ -100,6 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = '/login'
 
 ALLOWED_HOSTS  = [
     '*',

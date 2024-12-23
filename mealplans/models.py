@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from datetime import timezone
 
 # Create your models here.
 
@@ -101,11 +102,17 @@ class Plan(models.Model):
         return self.title
 
 
-
+class HealthLevelChoices(models.TextChoices):
+    UNDER_WEIGHT = 'Under Weight'
+    BALANCED = 'Balanced'
+    OVERWEIGHT = 'Over Weight'
+    OBESITY = 'Obesity'
+    
 class MealPlan(models.Model):
     title = models.CharField(max_length=200)
     plan = models.ForeignKey(Plan,on_delete=models.CASCADE,related_name='meal_plans')
     image = models.ImageField(upload_to='images/plan/meal/',blank=True,null=True)
+    health_level = models.CharField(max_length=30,choices=HealthLevelChoices.choices,null=True,blank=True)
     description = models.TextField(blank=True,null=True)
     is_popular = models.BooleanField(default=False)
     total_days = models.PositiveIntegerField()
@@ -161,6 +168,7 @@ class DayChoices(models.IntegerChoices):
     DAY30 = 30, 'Day 30'
 
 
+
 class DailyPlan(models.Model):
     title = models.CharField(max_length=255)
     mealplan = models.ForeignKey(MealPlan,on_delete=models.CASCADE,related_name='daily_meals')
@@ -192,16 +200,16 @@ class MealType(models.TextChoices):
     SNACKS = 'Snacks', 'Snacks'
     DINNER = 'Dinner', 'Dinner'
 
-class FoodType(models.TextChoices):
-    VEGAN = 'Vegan', 'Vegan'
-    VEGETARIAN = 'Vegetarian', 'Vegetarian'
-    NON_VEG = 'Non-Veg', 'Non-Veg'
+# class FoodType(models.TextChoices):
+#     VEGAN = 'Vegan', 'Vegan'
+#     VEGETARIAN = 'Vegetarian', 'Vegetarian'
+#     NON_VEG = 'Non-Veg', 'Non-Veg'
 
 
 class Meal(models.Model):
     daily_plan = models.ForeignKey(DailyPlan,on_delete=models.CASCADE,related_name='meals')
     meal_type = models.CharField(max_length=20, choices=MealType.choices)
-    food_type = models.CharField(max_length=20, choices=FoodType.choices)
+    # food_type = models.CharField(max_length=20, choices=FoodType.choices)
     description = models.TextField(blank=True,null=True)
     image = models.ImageField(upload_to='images/plan/meal/',blank=True,null=True)
     food_list = models.JSONField(blank=True,null=True)
@@ -213,13 +221,46 @@ class Meal(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def clean(self):
-        # Ensure only one meal of each type and food type can be created per DailyPlan
-        if Meal.objects.filter(daily_plan=self.daily_plan, meal_type=self.meal_type, food_type=self.food_type).exists():
-            raise ValidationError(f"A {self.get_meal_type_display()} meal of {self.get_food_type_display()} type has already been created for Day {self.daily_plan.day}. You can only have one of each meal type and food type per day.")
+        # Exclude the current instance if it exists (for updates)
+        existing_meals = Meal.objects.filter(
+            daily_plan=self.daily_plan,
+            meal_type=self.meal_type
+        )
+        if self.pk:  # Check if the instance already exists (update scenario)
+            existing_meals = existing_meals.exclude(pk=self.pk)
 
+        if existing_meals.exists():
+            raise ValidationError(
+                f"A {self.get_meal_type_display()} meal has already been created for Day {self.daily_plan.day}. "
+                f"You can only have one of each meal type and food type per day."
+            )
     def save(self, *args, **kwargs):
         # Call the clean method to validate
         self.clean()
         super().save(*args, **kwargs)     
     def __str__(self):
             return f"{self.get_meal_type_display()} for Day {self.daily_plan.day} of {self.daily_plan.title}"
+
+
+class CustomerRegisteredPlan(models.Model):
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    plan = models.ForeignKey(MealPlan,on_delete=models.CASCADE)
+    start_date = models.DateField()
+    is_current_plan = models.BooleanField(default=False)
+    is_expired = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+
+    def check_expiration(self):
+        """Check if the plan has expired based on start date and total days."""
+        from datetime import timedelta
+        expiration_date = self.start_date + timedelta(days=self.plan.total_days)
+        if expiration_date < timezone.now().date():
+            self.is_expired = True
+        else:
+            self.is_expired = False
+        self.save()
+
+    def __str__(self):
+        return f'{self.customer} - {self.plan.title}'

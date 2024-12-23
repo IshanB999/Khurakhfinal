@@ -4,6 +4,41 @@
 
 {% block content %}
 
+
+
+{% if not registered %}
+<div class="login_page dialog_box dialog-overlay" id="dialogOverlay3">
+    <div class="dialog_sm dialog">
+        <h2 class="header mt-15">Add New Meal Plan</h2>
+        <form  id="register-plan-form" method="post" onsubmit="handleSubmitPlanRegistration(event,'{{data.id}}')">
+            {% csrf_token %}
+            <span class="material-symbols-outlined close_login" onclick="closeDialogRegistration()">
+                close
+                </span>
+                <!-- <input type="hidden" name="plan" value="{{data.id}}"> -->
+            <div class="form-control">
+                <label for="date">Plan Start Date</label>
+                <input type="date" class="base_input" name="start_date" required>
+            </div>
+            {% if messages %}
+            <ul class="messages no_list_style">
+                {% for message in messages %}
+                    <li class="red sm_text">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    
+                <button class="global_btn submit mt-15">SUBMIT</button>
+    
+            <!-- <div class="underline"></div> -->
+
+    
+        </form> 
+    </div>
+</div>
+{% endif %}
+
+
    <div class="meal_planner_content">
     <div class="blog-container">
         <div class="img_banner_box two">
@@ -13,10 +48,18 @@
             <img src="https://picsum.photos/900/300/" alt="">
             {% endif %}
         </div>
+
         <h1 class="header">{{data.title}}</h1>
 
-        <p class="title_desc">{{data.description}}</p>
+        <p class="title_desc">{{data.description}} 
+            {% if not registered %}
+            <br><button class="global_btn mt-5" onclick="openMealRegistration()">Start This Plan</button>
+            {% else %}
 
+            <br><a href="/profile"><button class="global_btn">Already Registered / Go to Profile</button></a>
+            {% endif %}
+        </p>
+        
     </div>
 
 
@@ -58,21 +101,44 @@
         <div class="planner_sidebar content ">
             <h3>In This Article</h3>
             <ul id="sidebar-links">
-                <li><a href="#meal-prep-tips" class="sidebar-link">Meal Prep Tips</a></li>
                 {% for meals in daily_plans %}
                     <li><a href="#day{{forloop.counter}}" class="sidebar-link">Day {{forloop.counter}}</a></li>
                 {% endfor %}
             </ul>
+            <button class="global_btn mt-5">Start This Plan</button>
+
         </div>
         
         <div id="content" class="content data_body">
-            <h2 id="meal-prep-tips">Meal Prep Tips</h2>
-            <p>Content for Meal Prep Tips...</p>
             {% for daily_plan in daily_plans %}
                 <div id="day{{forloop.counter}}" class="content_box">
-                    <h2>{{daily_plan}}</h2>
-                    <P>{{daily_plan.description}}</P>
-                    
+                    <h3>{{daily_plan.title}}</h3>
+                    <!-- <P>{{daily_plan.description}}</P> -->
+                    <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo totam ratione ad! Fugit accusamus eveniet modi. Rem, vitae! Voluptatibus culpa natus nobis maiores ipsum aperiam excepturi soluta a recusandae repudiandae, sapiente sunt laudantium quasi dolorem at, expedita eligendi? In sapiente ut, voluptates vero provident repudiandae voluptate ipsam perferendis autem vel corrupti quibusdam numquam necessitatibus facere id consequatur libero ducimus dolore eligendi repellendus laborum. Obcaecati, ea ullam ipsum culpa quae temporibus optio ut quis odio non magnam fuga in nisi quia commodi nulla quaerat velit cum accusantium quos! Vitae accusamus, nihil optio quos rerum autem animi tempora earum asperiores quisquam, iure esse perspiciatis consectetur quidem hic voluptatibus suscipit! Repudiandae dolor et, velit iusto beatae animi at quam molestias possimus voluptates voluptas ea illum eveniet delectus vel. Autem, facilis dolorum repellat exercitationem architecto quibusdam, doloribus aspernatur non fugiat tenetur praesentium corrupti. Enim maxime praesentium beatae minima ab deleniti facilis, nam suscipit voluptas, quas, possimus magnam ea corrupti delectus sed iusto iste. Suscipit, repudiandae ex impedit iste ab natus dolorum nihil tempore facere nisi commodi consequuntur quibusdam atque voluptatem in. Eius cum vitae fugit facilis cumque. Temporibus, unde enim nesciunt est obcaecati ipsam possimus vitae eos, eius incidunt quia nostrum, quibusdam veniam sapiente.</p> -->
+
+                    {% for meal in daily_plan.meals.all %}
+                    <!-- <p>{{meal.description}}</p> -->
+                        <h3 class="type_header">{{meal.meal_type}}</h3>
+                        <div class="data_box">
+
+
+                            <ul class="foods">
+                                {% for food in meal.food_list %}
+                                <!-- <li>{{food}}</li> -->
+                                 <li>{{food}}</li>
+                                {% endfor %}
+                            </ul>
+
+                            <ul class="nutrition_count">
+                                <p>Nutrition Count</p>
+                                <li>Calories - {{meal.calories}} gm</li>
+                                <li>Protein - {{meal.protein}} gm</li>
+                                <li>Fats - {{meal.fats}} gm</li>
+                                <li>Carbs - {{meal.carbs}} gm</li>
+                            </ul>
+                           
+                        </div>
+                    {% endfor %}
                 </div>
             {% endfor %}
             <!-- Add remaining days -->
@@ -88,24 +154,25 @@
 
    <script>
 
-document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll(".sidebar-link");
-    const sections = Array.from(links).map(link => document.querySelector(link.getAttribute("href")));
+        document.addEventListener("DOMContentLoaded", function () {
 
-    window.addEventListener("scroll", () => {
-        let currentIndex = sections.findIndex(section => 
-            section.offsetTop <= window.scrollY + window.innerHeight / 2 &&
-            section.offsetTop + section.offsetHeight > window.scrollY + window.innerHeight / 2
-        );
+            const links = document.querySelectorAll(".sidebar-link");
+            const sections = Array.from(links).map(link => document.querySelector(link.getAttribute("href")));
 
-        links.forEach((link, index) => {
-            if (index === currentIndex) {
-                link.classList.add("active");
-            } else {
-                link.classList.remove("active");
-            }
+            window.addEventListener("scroll", () => {
+                let currentIndex = sections.findIndex(section => 
+                    section.offsetTop <= window.scrollY + window.innerHeight / 2 &&
+                    section.offsetTop + section.offsetHeight > window.scrollY + window.innerHeight / 2
+                );
+
+                links.forEach((link, index) => {
+                    if (index === currentIndex) {
+                        link.classList.add("active");
+                    } else {
+                        link.classList.remove("active");
+                    }
+                });
+            });
         });
-    });
-});
    </script>
 {% endblock content %}

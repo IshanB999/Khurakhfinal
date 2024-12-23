@@ -20,5 +20,7 @@ urlpatterns = [
     path('meal-planner/',views.pre_meal_plan_view,name='pre-meal-plan'),
     path('meal-planner/<int:pk>/',views.pre_meal_plan_content_view,name='pre-meal-plan-content'),
     path('plan/<int:pk>/',views.daily_plan_view,name='daily-plan-content'),
+
+     path('create-plan/<int:pk>/', views.create_customer_plan, name='create_customer_plan'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

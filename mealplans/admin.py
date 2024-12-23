@@ -116,9 +116,17 @@ admin.site.register(models.DailyPlan, DailyPlanAdmin)
 
 # Register Meal model
 class MealAdmin(admin.ModelAdmin):
-    list_display = ('meal_type', 'daily_plan','food_type','calories','protein','carbs','fats', 'created_at', 'updated_at')
+    list_display = ('meal_type', 'daily_plan','calories','protein','carbs','fats', 'created_at', 'updated_at')
     search_fields = ('meal_type', 'daily_plan__title')
-    list_filter = ('meal_type','food_type')
+    list_filter = ('meal_type',)
     ordering = ('-created_at',)
 
 admin.site.register(models.Meal, MealAdmin)
+
+
+@admin.register(models.CustomerRegisteredPlan)
+class CustomerRegisteredPlanAdmin(admin.ModelAdmin):
+    list_display = ('customer', 'plan', 'is_current_plan', 'is_expired', 'created_at', 'updated_at')
+    list_filter = ('is_current_plan', 'is_expired', 'created_at')
+    search_fields = ('customer__name', 'plan__title')
+    ordering = ('-created_at',)
