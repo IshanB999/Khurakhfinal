@@ -3,6 +3,8 @@ from django.template import loader
 from django.contrib.auth.models import User
 from .models import (
     Customer,
+    Blog,
+    BlogContents
 )
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import login,authenticate,logout
@@ -506,3 +508,10 @@ def change_password(request):
 
 
     
+
+
+def blog_view(request):
+    blog = Blog.objects.first()
+    blog_content = BlogContents.objects.all()
+
+    return render(request,'blog/blog_view.html',{'blog':blog,'contents':blog_content})

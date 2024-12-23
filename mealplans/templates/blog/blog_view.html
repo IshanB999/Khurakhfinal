@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+
+{% load static  %}
+
+{% block content %}
+
+    <div class="blog-container">
+        <h1 class="txt-center">Blog</h1>
+        <div class="img_banner_box">
+            <img src="{{blog.banner_image.url}}" alt="">
+        </div>
+    </div>
+
+{% endblock content %}

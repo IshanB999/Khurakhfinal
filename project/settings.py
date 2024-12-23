@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,11 +26,6 @@ SECRET_KEY = 'django-insecure-(e2i)0e@m9qufx=qkik4erh%tz^vvx-ouk-mdz_&ls@=e(w5hq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://6b1a-2405-acc0-1207-16a7-68d5-11d2-aa2c-a7e3.ngrok-free.app'
-]
 
 
 # Application definition
@@ -106,8 +102,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 ALLOWED_HOSTS  = [
-    '*'
+    '*',
+    "https://advanced-robin-hopelessly.ngrok-free.app"
 ]
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -130,6 +129,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR/'static',]
 STATIC_ROOT = BASE_DIR/'staticfiles'
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

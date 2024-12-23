@@ -1212,3 +1212,24 @@ a{
         place-items: center;
     }
 }
+
+
+.blog-container{
+    padding: 0px 80px;
+    h1{
+        text-align: center;
+        color: var(--text-color-dark);
+        margin-bottom: 20px;
+    }
+    .img_banner_box{
+        height: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+}

@@ -59,3 +59,17 @@ class FoodAdmin(admin.ModelAdmin):
     list_filter = ('plan',)
     search_fields = ('title', 'description')
     # readonly_fields = ('created_at', 'updated_at')
+    
+@admin.register(models.Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('header', 'created_at', 'updated_at')
+    search_fields = ('header',)
+    list_filter = ('created_at', 'updated_at')
+    ordering = ('-created_at',)
+
+@admin.register(models.BlogContents)
+class BlogContentsAdmin(admin.ModelAdmin):
+    list_display = ('header', 'created_at', 'updated_at')
+    search_fields = ('header',)
+    list_filter = ('created_at', 'updated_at')
+    ordering = ('-created_at',)

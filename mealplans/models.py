@@ -77,3 +77,27 @@ class Food(models.Model):
     def __str__(self) -> str:
         return self.title
     
+
+
+
+class Blog(models.Model):
+    header = models.CharField(max_length=100)
+    banner_image = models.ImageField(upload_to='images/blog/',blank=True,null=True)
+    description = models.TextField(blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.header
+    
+
+class BlogContents(models.Model):
+    image = models.ImageField(upload_to='images/blog/content/',blank=True,null=True)
+    header = models.CharField(max_length=200)
+    description = models.TextField(blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.header
+

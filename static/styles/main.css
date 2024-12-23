@@ -1020,4 +1020,26 @@ a {
   flex-direction: column;
   place-content: center;
   place-items: center;
+}
+
+.blog-container {
+  padding: 0px 80px;
+}
+.blog-container h1 {
+  text-align: center;
+  color: var(--text-color-dark);
+  margin-bottom: 20px;
+}
+.blog-container .img_banner_box {
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.blog-container .img_banner_box img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }/*# sourceMappingURL=main.css.map */
