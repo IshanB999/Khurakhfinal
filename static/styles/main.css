@@ -1551,6 +1551,30 @@ a {
   .box_container .content_box .img {
     height: 100px;
   }
+  .box_container .content_header {
+    font-size: 1rem;
+  }
+  .box_container .short_description {
+    font-size: 0.8rem;
+  }
+  .meal_planner_content {
+    padding: 0px;
+  }
+  .planner_descriptions_box .box {
+    display: flex;
+    flex-direction: column;
+  }
+  .planner_sidebar_container .content .content_box .data_box {
+    width: 100%;
+    flex-direction: column;
+    place-items: left;
+  }
+  .planner_sidebar_container .content .content_box .data_box .foods {
+    border: 1px solid black;
+  }
+  .planner_sidebar_container .content .content_box .data_box .nutrition_count {
+    width: 100%;
+  }
   .dialog_box {
     left: 0;
     top: 20px;
