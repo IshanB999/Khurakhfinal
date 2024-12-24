@@ -88,8 +88,23 @@ const bmit = bmi; // Example value for bmit
 
 function toggleDropdown(event) {
   const dropdown = document.getElementById('dropdownMenu');
+
+  // Toggle the dropdown display
   dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+
+  // Add an event listener to close the dropdown when clicking outside
+  // document.addEventListener('click', handleOutsideClick);
 }
+
+// Add event listener to dropdown items
+document.querySelectorAll('#dropdownMenu a').forEach(item => {
+  item.addEventListener('click', () => {
+    const dropdown = document.getElementById('dropdownMenu');
+    dropdown.style.display = 'none'; // Close the dropdown when an item is clicked
+    document.removeEventListener('click', handleOutsideClick); // Clean up the event listener
+  });
+});
+
 
 
 

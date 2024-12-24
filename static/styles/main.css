@@ -23,6 +23,11 @@
   --spacing: 16px;
 }
 
+body {
+  max-width: 1500px;
+  margin: auto;
+}
+
 .cur-p {
   cursor: pointer;
 }
@@ -123,6 +128,9 @@
 }
 
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background-color: white;
   height: 120px;
   padding: 10px;
@@ -133,6 +141,9 @@
   place-items: center;
   justify-content: space-between;
   border-bottom: 10px solid var(--page-bg);
+}
+.navbar .mobile {
+  display: none;
 }
 .navbar .logo_box {
   padding: 10px;
@@ -160,6 +171,12 @@
   max-height: 90px;
   margin: auto;
 }
+.navbar .menu {
+  display: none;
+}
+.navbar .dropdown .mobile_box {
+  display: none;
+}
 .navbar .right_nav_content {
   margin-right: 10px;
   width: 60%;
@@ -173,6 +190,9 @@
   justify-content: right;
   -moz-column-gap: 20px;
        column-gap: 20px;
+}
+.navbar .right_nav_content .top_buttons .menu {
+  display: none;
 }
 .navbar .right_nav_content .nav_items ul {
   display: flex;
@@ -229,8 +249,8 @@
 .dropdown {
   display: none; /* Hide by default */
   position: absolute; /* Position relative to the parent */
-  top: 60px; /* Position below the icon */
-  right: 20; /* Align to the right */
+  top: 70px; /* Position below the icon */
+  right: 20px; /* Align to the right */
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -493,18 +513,21 @@
 .footer {
   display: flex;
   background-image: linear-gradient(40deg, var(--primary-color), var(--green-logo));
-  height: 100px;
+  height: 200px;
   justify-content: space-between;
   place-items: center;
-  padding: 20px;
+  padding: 30px;
   margin-top: 50px;
 }
 .footer .foot_nav {
   list-style: none;
-  display: flex;
   color: white;
   -moz-column-gap: 20px;
        column-gap: 20px;
+}
+.footer .foot_nav li {
+  cursor: pointer;
+  margin-bottom: 10px;
 }
 .footer .social_media {
   list-style: none;
@@ -513,15 +536,18 @@
   -moz-column-gap: 20px;
        column-gap: 20px;
 }
+.footer .social_media li {
+  cursor: pointer;
+}
 
 .dialog_box {
   position: fixed;
   left: 50%;
-  top: 50%;
+  top: 60%;
   z-index: 10;
   transform: translate(-50%, -50%);
   background-color: white;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.5);
   visibility: hidden;
@@ -1287,7 +1313,7 @@ a {
 .meal_planner_content .planner_sidebar_container .content.planner_sidebar {
   width: 20%;
   position: sticky;
-  top: 0px;
+  top: 100px;
   max-height: calc(100vh - 40px);
   overflow-y: auto;
   background-color: #f8f9fa;
@@ -1431,4 +1457,258 @@ a {
 
 .no_recommended_box {
   min-height: 50vh;
+}
+
+/* Mobile View (up to 767px) */
+@media screen and (max-width: 767px) {
+  .container {
+    padding: 10px;
+  }
+  .header {
+    font-size: 20px;
+  }
+  .navbar {
+    padding: 2px;
+    min-height: 100px;
+    height: auto;
+  }
+  .navbar .mobile {
+    display: flex;
+  }
+  .navbar .logo_box .title h2 {
+    font-size: 1.5rem;
+  }
+  .navbar .logo_box .title p {
+    font-size: 0.8rem;
+  }
+  .navbar .right_nav_content {
+    width: 100%;
+    width: 100%;
+    width: 30%;
+    height: 100%;
+    place-content: center;
+    place-items: center;
+    gap: 0;
+  }
+  .navbar .right_nav_content .global_btn {
+    display: none;
+  }
+  .navbar .right_nav_content .top_buttons {
+    display: block;
+    place-content: center;
+    place-items: center;
+    gap: 5px;
+  }
+  .navbar .right_nav_content .top_buttons button {
+    height: 20px;
+    margin-bottom: 5px;
+  }
+  .navbar .right_nav_content .responsive_nav {
+    border: 1px solid black;
+  }
+  .navbar .right_nav_content .top_buttons {
+    font-size: 0.8rem;
+    height: 70px;
+  }
+  .navbar .right_nav_content .top_buttons .menu {
+    display: block;
+  }
+  .navbar .right_nav_content .top_buttons .user_box {
+    width: 50px;
+  }
+  .navbar .right_nav_content .top_buttons .user-info {
+    display: none;
+  }
+  .navbar .right_nav_content .dropdown .mobile_box {
+    display: block;
+  }
+  .navbar .right_nav_content .nav_items ul {
+    display: flex;
+    flex-direction: column;
+  }
+  .navbar .right_nav_content .nav_items ul.hide {
+    display: none;
+  }
+  .navbar .right_nav_content .nav_items ul .show {
+    display: block;
+  }
+  .main_blog_container {
+    border: 1px solid black;
+    display: block;
+  }
+  .blog-container {
+    padding: 5px;
+  }
+  .blog-container .img_banner_box {
+    height: 200px;
+  }
+  .blog-container p {
+    font-size: 0.9rem;
+  }
+  .main_blog_container {
+    padding: 2px;
+  }
+  .box_container .content_box .img {
+    height: 100px;
+  }
+  .dialog_box {
+    left: 0;
+    top: 20px;
+    transform: translate(0px, 0px);
+    width: 100vw;
+    height: 100vh;
+    border: 1px solid black;
+    padding: 5px;
+  }
+  .dialog_box .dialog_sm {
+    width: 100%;
+  }
+  .login_page form button {
+    height: 40px;
+  }
+  .login_page .dialog_sm {
+    padding: 5px;
+  }
+  .signup_page {
+    padding: 0px 10px;
+    background-color: white;
+  }
+  .signup_page .header {
+    margin-top: 10px;
+  }
+  .signup_page .signup_container {
+    flex-direction: column-reverse;
+  }
+  .signup_page .signup_container .img_box img {
+    height: 100px;
+    width: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -o-object-position: center;
+       object-position: center;
+  }
+  .signup_page .signup_container form {
+    margin-top: 10px;
+  }
+  .signup_page .signup_container form .global_btn {
+    height: 40px;
+  }
+  .homepage_container .header {
+    font-size: 1.8rem;
+  }
+  .homepage_container h2 {
+    font-size: 1.3rem;
+  }
+  .homepage_container .global_btn {
+    height: 40px;
+  }
+  .how_it_works .header h1 {
+    font-size: 1.5rem;
+  }
+  .how_it_works .container {
+    margin-top: 10px;
+    display: block;
+  }
+  .how_it_works .container svg {
+    display: none;
+  }
+  .how_it_works .container .left {
+    width: 100%;
+  }
+  .how_it_works .container .right {
+    width: 100%;
+  }
+  .how_it_works .container .right h2 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  .healthy_even_mean .ellipse2 {
+    width: 100%;
+    border: none;
+    height: 0;
+  }
+  .healthy_even_mean .header p {
+    width: 100%;
+  }
+  .healthy_even_mean .container {
+    margin-top: 30px;
+  }
+  .healthy_even_mean .container.ct2, .healthy_even_mean .container.ct3 {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .healthy_even_mean .container.ct2 .right, .healthy_even_mean .container.ct3 .right {
+    display: flex;
+    place-content: center;
+  }
+  .user_dashboard_container .profile_data_box .data_box {
+    width: 90%;
+  }
+  .user_dashboard_container .profile_data_box .data_box .img_box {
+    display: none;
+  }
+  .user_dashboard_container .my_meals {
+    padding: 0px 10px;
+  }
+  .bmi_calculator_container {
+    padding: 5px;
+    height: auto;
+  }
+  .bmi_calculator_container .header .logo img {
+    height: 40px;
+  }
+  .bmi_calculator_container .header h2 {
+    font-size: 1.5rem;
+  }
+  .bmi_calculator_container .header p {
+    font-size: 1rem;
+  }
+  .bmi_calculator_container .size_manager {
+    padding: 5px;
+    flex-direction: column;
+  }
+  .bmi_calculator_container .size_manager form {
+    width: 100%;
+  }
+  .bmi_calculator_container .size_manager .bmi-result-box {
+    margin-top: 30px;
+    width: 100%;
+  }
+}
+/* Tablet View (768px to 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    padding: 20px;
+  }
+  .header {
+    font-size: 24px;
+  }
+  .healthy_even_mean .ellipse2 {
+    width: 100%;
+    margin-top: 100px;
+    display: none;
+  }
+  .healthy_even_mean .container {
+    width: 100%;
+  }
+  .healthy_even_mean .container .left {
+    width: 50%;
+  }
+  .dialog_box {
+    left: 0;
+    top: 90px;
+    transform: translate(0px, 0px);
+    width: 100vw;
+    border: 1px solid black;
+    padding: 5px;
+  }
+  .dialog_box .dialog_sm {
+    width: 100%;
+  }
+  .user_dashboard_container .profile_data_box .data_box {
+    width: 90%;
+  }
+  .user_dashboard_container .my_meals {
+    padding: 0px 10px;
+  }
 }/*# sourceMappingURL=main.css.map */

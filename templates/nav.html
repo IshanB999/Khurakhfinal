@@ -11,17 +11,54 @@
     <div class="right_nav_content">
         
         <div class="top_buttons">
+
+            {% if not user.is_authenticated %}
+            <div class="user_box profile-icon mobile"  onclick="toggleDropdown()">
+                <!-- <span class="icon material-symbols-outlined">
+                    person
+                    </span> -->
+                    <span class="icon material-symbols-outlined menu">
+                        Menu
+                        </span>
+
+                <div class="user-info">{{ user.first_name }} {{ user.last_name }}</div>
+            </div>
+            <div class="dropdown" id="dropdownMenu">
+                <a href="{% url 'login' %}">SignIn</a>
+                <a href="{% url 'signup' %}">Sign Up</a>
+
+                <div class="mobile_box">
+                    <a href="{% url 'pre-meal-plan' %}">MEAL PLANNER</a>
+                    <a href="{% url 'calculator' %}">BMI CALCULATOR</a>
+                    <a href="{% url 'blog-view' %}">BLOG</a></li>
+                    <a href="/no-path">SPECALITY MEAL PLANS</a>
+                </div>
+            </div>
+            {% endif %}
+
             {% if user.is_authenticated %}
             <!-- Display user info and logout button -->
             <div class="user_box profile-icon"  onclick="toggleDropdown()">
                 <span class="icon material-symbols-outlined">
                     person
                     </span>
+
+                    <span class="icon material-symbols-outlined menu">
+                        Menu
+                        </span>
+
                 <div class="user-info">{{ user.first_name }} {{ user.last_name }}</div>
             </div>
             <div class="dropdown" id="dropdownMenu">
                 <a href="{% url 'profile' %}">Profile</a>
                 <a href="{% url 'logout' %}">Logout</a>
+
+                <div class="mobile_box">
+                    <a href="{% url 'pre-meal-plan' %}">MEAL PLANNER</a>
+                    <a href="{% url 'calculator' %}">BMI CALCULATOR</a>
+                    <a href="{% url 'blog-view' %}">BLOG</a></li>
+                    <a href="/no-path">SPECALITY MEAL PLANS</a>
+                </div>
             </div>
             <!-- <a href="{% url 'logout' %}">
                 <button class="global_btn">LOGOUT</button>
@@ -34,7 +71,7 @@
             {% endif %}
         </div>
         <div class="nav_items">
-            <ul>
+            <ul class="hide">
                 <li><a href="{% url 'pre-meal-plan' %}">MEAL PLANNER</a></li>
                 <li><a href="{% url 'calculator' %}">BMI CALCULATOR</a></li>
                 <li><a href="{% url 'blog-view' %}">BLOG</a></li>
@@ -69,8 +106,12 @@ setActiveNav();
 
 // Add event listeners to update on click
 document.querySelectorAll('.nav_items ul li a').forEach(navItem => {
+
     navItem.addEventListener('click', () => {
         setActiveNav();
     });
 });
+
+
+
 </script>

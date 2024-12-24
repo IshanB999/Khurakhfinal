@@ -30,6 +30,8 @@
     // background-color: var(--page-bg);
     // padding-left: 50px;
     // padding-right: 50px;
+    max-width: 1500px;
+    margin: auto;
   }
 
   .cur-p{
@@ -143,6 +145,9 @@
 
 .navbar{
     // border: 1px solid black;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     background-color: white;
     height: 120px;
     padding: 10px;
@@ -153,6 +158,9 @@
     place-items: center;
     justify-content: space-between;
     border-bottom: 10px solid var(--page-bg);
+    .mobile{
+        display: none;
+    }
 
     .logo_box{
         padding: 10px;
@@ -181,7 +189,15 @@
             margin: auto;
         }
     }
+    .menu{
+        display: none;
+    }
 
+    .dropdown{
+        .mobile_box{
+            display: none;
+        }
+    }
 
     .right_nav_content{
         margin-right: 10px;
@@ -190,11 +206,15 @@
         justify-content: right;
         flex-direction: column;
         gap: 30px;
+        // border: 1px solid black;
         .top_buttons{
             // border: 1px solid black;
             display: flex;
             justify-content: right;
             column-gap: 20px;
+            .menu{
+                display: none;
+            }
         }
         .nav_items{
             // border: 1px solid blue;
@@ -265,8 +285,8 @@
 .dropdown {
     display: none; /* Hide by default */
     position: absolute; /* Position relative to the parent */
-    top: 60px; /* Position below the icon */
-    right: 20; /* Align to the right */
+    top: 70px; /* Position below the icon */
+    right: 20px; /* Align to the right */
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -594,34 +614,41 @@ $stretch:-80px;
 .footer{
     display: flex;
     background-image: linear-gradient(40deg,var(--primary-color),var(--green-logo));
-    height: 100px;
+    height: 200px;
     justify-content: space-between;
     // place-content: center;
     place-items: center;
-    padding: 20px;
+    padding: 30px;
     margin-top: 50px;
     .foot_nav{
         list-style: none;
-        display: flex;
+        // display: flex;
         color: white;
         column-gap: 20px;
+        li{
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
     }
     .social_media{
         list-style: none;
         display: flex;
         color: white;
         column-gap: 20px;
+        li{
+            cursor: pointer;
+        }
     }
 }
 .dialog_box{
     // border: 1px solid black;
     position: fixed;
     left: 50%;
-    top: 50%;
+    top: 60%;
     z-index: 10;
     transform: translate(-50%,-50%);
     background-color: white;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     background-color: rgba($color: #000000, $alpha: 0.5);
     visibility: hidden;
@@ -1523,7 +1550,7 @@ a{
 
             width: 20%;
             position: sticky;
-            top: 0px; // Adjust this value to set how far from the top you want the sidebar to stick
+            top: 100px; // Adjust this value to set how far from the top you want the sidebar to stick
             max-height: calc(100vh - 40px); // Optional: Ensure it fits within the viewport
             overflow-y: auto; // Enable scrolling if the content exceeds the viewport
             background-color: #f8f9fa; // Optional: Add a background color
@@ -1692,4 +1719,407 @@ a{
 
 .no_recommended_box{
     min-height: 50vh;
+}
+
+
+
+
+/* Mobile View (up to 767px) */
+@media screen and (max-width: 767px) {
+    body {
+        // background-color: lightblue;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .header {
+        font-size: 20px;
+    }
+
+
+    .navbar{
+        padding: 2px;
+        min-height: 100px;
+        height: auto;
+        // width: 100%;
+
+        .mobile{
+            display: flex;
+        }
+        .logo_box{
+           .title{
+            h2{
+                font-size: 1.5rem;
+            }
+            p{
+                font-size: 0.8rem;
+            }
+           }
+        }
+        .right_nav_content{
+            // width: 60%;
+            width: 100%;
+            width: 100%;
+            // border: 1px solid black;
+            .global_btn{
+                display: none;
+            }
+            .top_buttons{
+                // width: 60%;
+                // border: 1px solid black;
+                display: block;
+                place-content: center;
+                place-items: center;
+                gap: 5px;
+                button{
+                    height: 20px;
+                    // width: 100px;
+                    margin-bottom: 5px;
+                }
+            }
+
+            .responsive_nav{
+                border: 1px solid black;
+            }
+            // border: 1px solid black;
+            // display: none;
+            width: 30%;
+            height: 100%;
+            place-content: center;
+            place-items: center;
+            // flex-direction: row;
+            gap: 0;
+            // width: auto;
+            // justify-content: right;
+            .top_buttons{
+                font-size: 0.8rem;
+                // max-height: 40px;
+                // height: 70%;
+                height: 70px;
+                .menu{
+                    display: block;
+                }
+                .user_box{
+                    width: 50px;
+                    // height: 100%;
+                }
+                .user-info{
+                    display:none;
+                }
+            }
+
+            .dropdown{
+                .mobile_box{
+                    display: block;
+                }
+            }
+            .nav_items{
+                
+                ul{
+                    // display: block;
+                    // display: none;
+                    display: flex;
+                    flex-direction: column;
+                    &.hide{
+                        display: none;
+                    }
+                    .show{
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+
+    .main_blog_container{
+        border: 1px solid black;
+        display: block;
+    }
+
+
+
+
+    .blog-container{
+        padding: 5px;
+        .img_banner_box{
+            height: 200px;
+        }
+        p{
+            font-size: 0.9rem;
+        }
+
+
+    }
+    .main_blog_container{
+        padding: 2px;
+
+    }
+    .box_container{
+        .content_box{
+            // background-color: white;
+            .img{
+                height: 100px;
+            }
+        }
+    }
+
+    // login
+    .dialog_box{
+        left: 0;
+        top: 20px;
+        transform: translate(0px,0px);
+        width: 100vw;
+        height: 100vh;
+        border: 1px solid black;
+        padding: 5px;
+        .dialog_sm{
+            width: 100%;
+        }
+    }
+
+    .login_page{
+        // height: 100%;
+        form{
+            button{
+                height: 40px;
+            }
+        }
+        .dialog_sm{
+            padding: 5px;
+            // border: 5px solid blue;
+            // width: 90%;
+            // height: 100%;
+        }
+    }
+
+    .signup_page{
+        padding: 0px 10px;
+        background-color: white;
+        .header{
+            margin-top: 10px;
+        }
+        .signup_container{
+            // background-color: white;
+            flex-direction: column-reverse;
+            // margin-top: 10px;
+            .img_box{
+                img{
+                    height: 100px;
+                    width: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                }
+            }
+            form{
+                margin-top: 10px;
+                .global_btn{
+                    height: 40px;
+                }
+            }
+        }
+    }
+
+    .homepage_container{
+        .header{
+            font-size: 1.8rem;
+        }
+        h2{
+            font-size: 1.3rem;
+        }
+        .global_btn{
+            height: 40px;
+
+        }
+    }
+
+    .how_it_works{
+        .header{
+            h1{
+                font-size: 1.5rem;
+            }
+        }
+        .container{
+            // border: 1px solid black;
+            margin-top: 10px;
+            display: block;
+
+            svg{
+                display: none;
+            }
+            .left{
+                // border: 1px solid black;
+                width: 100%;
+            }
+            .right{
+                // border: 1px solid red;
+                width: 100%;
+                // display: flex;
+                
+                h2{
+                    font-size: 1.2rem;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .healthy_even_mean{
+        // height: 120vh;
+        // height: auto;
+        .ellipse2{
+            width: 100%;
+            border: none;
+            height: 0;
+        }
+        .header{
+            p{
+                width: 100%;
+            }
+        }
+
+        .container{
+            margin-top: 30px;
+            &.ct2,&.ct3{
+                // flex-direction: row-reverse;
+                display: flex;
+                // border: 1px solid black;
+                flex-direction: column-reverse;
+                .right{
+                    display: flex;
+                    place-content: center;
+                   
+                }
+            }
+        }
+    }
+
+    .footer{
+
+    }
+
+
+
+    .user_dashboard_container{
+        .profile_data_box{
+            // border: 1px solid black;
+            .data_box{
+                width: 90%;
+                .img_box{
+                    display: none;
+                }
+                // border: 1px solid blue;
+            }
+        }
+        .my_meals{
+            padding: 0px 10px;
+        }
+    }
+
+
+
+    .bmi_calculator_container{
+        // border: 1px solid black;
+        padding: 5px;
+        height: auto;
+        
+        .header{
+            .logo{
+                img{
+                    height: 40px;
+                }
+            }
+            h2{
+                font-size: 1.5rem;
+            }
+            p{
+                font-size: 1rem;
+            }
+            .title{
+                // font-size: 20px;
+            }
+        }
+        .size_manager{
+            // display: block;
+            padding: 5px;
+            flex-direction: column;
+            form{
+                width: 100%;
+            }
+            .bmi-result-box{
+                margin-top: 30px;
+                width: 100%;
+            }
+        }
+    }
+}
+
+/* Tablet View (768px to 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    body {
+        // background-color: lightgreen;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .header {
+        font-size: 24px;
+    }
+
+    .healthy_even_mean{
+        // margin-top: 100px;
+        // max-height: 100vh;
+        .ellipse2{
+            width: 100%;
+            margin-top: 100px;
+            display: none;
+        }
+        .header{
+            // margin-top: 200px;
+            // border: 1px solid black;
+            
+        }
+        .container{
+            // margin-top: 100px;
+            width: 100%;
+            .left{
+                width: 50%;
+            }
+        }
+    }
+
+    .dialog_box{
+        left: 0;
+        top: 90px;
+        transform: translate(0px,0px);
+        width: 100vw;
+        // height: 100vh;
+        // height: auto;
+
+        border: 1px solid black;
+        padding: 5px;
+        .dialog_sm{
+            width: 100%;
+            // height: 90%;
+        }
+    }
+    .user_dashboard_container{
+        .profile_data_box{
+            // border: 1px solid black;
+            .data_box{
+                width: 90%;
+                .img_box{
+                    // display: none;
+                }
+                // border: 1px solid blue;
+            }
+        }
+        .my_meals{
+            padding: 0px 10px;
+        }
+    }
 }
