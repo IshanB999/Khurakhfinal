@@ -102,17 +102,17 @@ class Plan(models.Model):
         return self.title
 
 
-class HealthLevelChoices(models.TextChoices):
-    UNDER_WEIGHT = 'Under Weight'
-    BALANCED = 'Balanced'
-    OVERWEIGHT = 'Over Weight'
-    OBESITY = 'Obesity'
+class HealthLevelChoices(models.IntegerChoices):
+    UNDER_WEIGHT = 1,'Under Weight'
+    BALANCED = 2,'Balanced'
+    OVERWEIGHT = 3,'Over Weight'
+    OBESITY = 4,'Obesity'
     
 class MealPlan(models.Model):
     title = models.CharField(max_length=200)
     plan = models.ForeignKey(Plan,on_delete=models.CASCADE,related_name='meal_plans')
     image = models.ImageField(upload_to='images/plan/meal/',blank=True,null=True)
-    health_level = models.CharField(max_length=30,choices=HealthLevelChoices.choices,null=True,blank=True)
+    health_level = models.IntegerField(choices=HealthLevelChoices.choices,null=True,blank=True)
     description = models.TextField(blank=True,null=True)
     is_popular = models.BooleanField(default=False)
     total_days = models.PositiveIntegerField()

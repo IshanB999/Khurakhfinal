@@ -18,9 +18,9 @@
     {% if messages %}
     {% for message in messages %}
       <script>
-          document.addEventListener("DOMContentLoaded",function(){
-              showSnackBar('{{message}}','success')
-          })
+        document.addEventListener("DOMContentLoaded", function() {
+          showSnackBar('{{ message }}', '{{ message.tags }}');
+        });
       </script>
     {% endfor %}
   {% endif %}

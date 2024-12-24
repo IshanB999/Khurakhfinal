@@ -22,5 +22,6 @@ urlpatterns = [
     path('plan/<int:pk>/',views.daily_plan_view,name='daily-plan-content'),
 
      path('create-plan/<int:pk>/', views.create_customer_plan, name='create_customer_plan'),
+    path('recommended-plans/',views.recommended_plans_view,name='recommended-bmi-plans'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

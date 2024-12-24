@@ -36,29 +36,51 @@
 
 
   <div class="my_meals">
-    <h2 class="profile_plan_header">My Plans</h2>
-
+    
+    <h2 class="profile_plan_header">My Plans ({{plans_count}})</h2>
+  {% if plans_count > 0 %}
   <div class="box_container">
     {% for content in my_plans %}
-        <a href="{% url 'daily-plan-content' content.plan.id %}" class="content_box">
-            <div class="img_box">
-                <img src="{{content.plan.image.url}}" alt="">
-            </div>
-            <h3 class="content_header">{{content.plan.title}}</h3>
-            <p class="short_description">{{content.plan.description}}</p>
+    <a href="{% url 'daily-plan-content' content.plan.id %}" class="content_box">
+        <div class="img_box">
+            <img src="{{content.plan.image.url}}" alt="">
+        </div>
+        <h3 class="content_header">{{content.plan.title}}</h3>
+        <p class="short_description">{{content.plan.description}}</p>
 
-            <p class="short_description">Started AT - {{content.start_date}}</p>
+        <p class="short_description">Started AT - {{content.start_date}}</p>
 
-            {% if content.is_expired %}
-              <p class="short_description">Status - Expired</p>
-            {% else %}
-            <p class="short_description">Status - Not Started Yet</p>
-            {% endif %}
+        {% if content.is_expired %}
+          <p class="short_description">Status - Expired</p>
+        {% else %}
+        <p class="short_description">Status - Not Started Yet</p>
+        {% endif %}
 
-          {% endfor %}
+      {% endfor %}
+
+
 </div>
+{% else %}
+
+<div class="no_plans_box">
+  <h2>No Plans Registered Yet</h2>
+  <a href="/meal-planner"><button class="global_btn">View Meals Plans</button></a>
+  <a href="/bmi-calculator" class="mt-5 bmi_link">Calculate BMI and Get Personalized Recommendations</a>
+</div>
+{% endif %}
 
   </div>
 </div>
 
+
+<script>
+  const searchParams = new URLSearchParams(window.location.search)
+
+  const profileEdit = searchParams.get('open')
+
+  console.log('param value',profileEdit)
+  if(profileEdit){
+    document.getElementById('dialogOverlay2').classList.add('show');
+  }
+</script>
 {% endblock content %}

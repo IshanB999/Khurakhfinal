@@ -181,13 +181,20 @@
   -moz-column-gap: 30px;
        column-gap: 30px;
 }
-.navbar .right_nav_content .nav_items ul li, .navbar .right_nav_content .nav_items ul a {
+.navbar .right_nav_content .nav_items ul li.active {
+  font-weight: bold;
+  color: black;
+}
+.navbar .right_nav_content .nav_items ul li.active a {
+  color: black;
+}
+.navbar .right_nav_content .nav_items ul a {
   text-decoration: none;
   color: var(--text-color);
   font-size: 0.8rem;
   transition: 0.3s ease-in-out;
 }
-.navbar .right_nav_content .nav_items ul li:hover, .navbar .right_nav_content .nav_items ul a:hover {
+.navbar .right_nav_content .nav_items ul a:hover {
   color: black;
 }
 
@@ -1072,7 +1079,7 @@ a {
 
 .box_container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   margin-top: 50px;
 }
@@ -1370,7 +1377,7 @@ a {
   background-color: rgb(1, 108, 1);
 }
 .snackbar.error {
-  background-color: var(--error-red);
+  background-color: rgb(254, 58, 58);
 }
 .snackbar.hide {
   visibility: visible;
@@ -1384,4 +1391,44 @@ a {
 .my_meals .profile_plan_header {
   margin-top: 150px;
   text-align: center;
+}
+
+.no_plans_box {
+  color: var(--light-black);
+  width: 100%;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.no_plans_box button {
+  margin-top: 20px;
+}
+.no_plans_box .bmi_link {
+  margin-top: 10px;
+  color: var(--light-black);
+  text-decoration: underline;
+}
+
+.recommended_user_data {
+  display: flex;
+  margin-top: 30px;
+}
+.recommended_user_data .box {
+  margin: auto;
+  min-width: 300px;
+  background-color: var(--green-logo);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px gray;
+}
+.recommended_user_data .box p {
+  margin-bottom: 5px;
+}
+
+.no_recommended_box {
+  min-height: 50vh;
 }/*# sourceMappingURL=main.css.map */

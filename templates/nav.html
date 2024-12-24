@@ -38,8 +38,39 @@
                 <li><a href="{% url 'pre-meal-plan' %}">MEAL PLANNER</a></li>
                 <li><a href="{% url 'calculator' %}">BMI CALCULATOR</a></li>
                 <li><a href="{% url 'blog-view' %}">BLOG</a></li>
-                <li><a href="">SPECALITY MEAL PLANS</a></li>
+                <li><a href="/no-path">SPECALITY MEAL PLANS</a></li>
             </ul>
         </div>
     </div>
 </nav>
+
+<script>
+    // Function to set the active class based on the URL
+function setActiveNav() {
+    const currentURL = window.location.href.toLowerCase(); // Get and normalize current URL
+    const navItems = document.querySelectorAll('.nav_items ul li a');
+
+    navItems.forEach(navItem => {
+        const parentLi = navItem.parentElement;
+
+        // Remove 'active' class from all items
+        parentLi.classList.remove('active');
+
+        // Check if the href matches the URL or starts with a keyword
+        if (currentURL.includes(navItem.getAttribute('href').toLowerCase()) || 
+            currentURL.includes('meal_planner') && navItem.textContent.trim().toLowerCase() === 'meal planner') {
+            parentLi.classList.add('active');
+        }
+    });
+}
+
+// Run on page load
+setActiveNav();
+
+// Add event listeners to update on click
+document.querySelectorAll('.nav_items ul li a').forEach(navItem => {
+    navItem.addEventListener('click', () => {
+        setActiveNav();
+    });
+});
+</script>

@@ -203,7 +203,16 @@
                 list-style: none;
                 justify-content: right;
                 column-gap: 30px;
-                li,a{
+                li{
+                    &.active{
+                        font-weight: bold;
+                        color: black;
+                        a{
+                            color: black;
+                        }
+                    }
+                }
+                a{
                     
                     text-decoration: none;
                     color: var(--text-color);
@@ -1261,7 +1270,7 @@ a{
 }
 .box_container{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     margin-top: 50px;
     .content_box{
@@ -1622,7 +1631,7 @@ a{
       background-color: rgb(1, 108, 1);
     }
     &.error{
-      background-color: var(--error-red);
+      background-color: rgb(254, 58, 58);
     }
   
     &.hide {
@@ -1638,4 +1647,49 @@ a{
         text-align: center;
     }
     padding: 0px 80px;
+}
+
+
+.no_plans_box{
+    // border: 1px solid black;
+    color: var(--light-black);
+    width: 100%;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+    button{
+        margin-top: 20px;
+    }
+    .bmi_link{
+        margin-top: 10px;
+        color: var(--light-black);
+        text-decoration: underline;
+    }
+}
+
+.recommended_user_data{
+    // border: 1px solid black;
+    display: flex;
+    margin-top: 30px;
+    .box{
+        margin: auto;
+        min-width: 300px;
+        background-color: var(--green-logo);
+        color: white;
+        text-align: center;
+        // border: 1px solid black;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 10px gray;
+        p{
+            margin-bottom: 5px;
+        }
+    }
+}
+
+
+.no_recommended_box{
+    min-height: 50vh;
 }

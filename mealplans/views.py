@@ -42,7 +42,7 @@ def index(request):
 def signup(request):
 
     if request.user.is_authenticated:
-        return redirect('/')  # Replace 'home' with the appropriate URL name or pat
+        return redirect('/profile')  # Replace 'home' with the appropriate URL name or pat
 
 
     if request.method == 'POST':
@@ -65,19 +65,23 @@ def signup(request):
         
         # Log the user in and redirect to a success or home page
         messages.success(request,"Successfully Created a user and Logged in")
+        messages.success(request,"Please Edit Your Profile for personalized recommendations")
 
         login(request, user)
-        return redirect('/')  # Replace 'home' with your actual redirect URL
+        return redirect('/profile?open=1')  # Replace 'home' with your actual redirect URL
     
     return render(request, 'auth/signup.html')
 
 
+
 def login_view(request):
-
-    
     if request.user.is_authenticated:
-        return redirect('/')  # Replace 'home' with the appropriate URL name or pat
+        return redirect('/profile')  # Redirect to the profile page if already logged in
 
+    # Check if there is a 'next' parameter in the query string
+    next_path = request.GET.get('next', '/profile')  # Default to '/profile' if 'next' is not provided
+
+    print('next path',next_path)
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -85,11 +89,10 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, 'Logged in successfully!')
-            return redirect('/')  # Change to your desired redirect URL
+            return redirect(next_path)  # Redirect to the 'next' path or the default
         else:
             messages.error(request, 'Invalid username or password.')
-    return render(request, 'home.html')  # Redirect to base template to render popup
-
+    return render(request, 'home.html')  # Show the login form
 
 
 
@@ -100,7 +103,10 @@ def logout_view(request):
 
 
 
-
+def calculate_age(birth_date):
+    today = date.today()
+    age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+    return age
 
 # function for the BMI calculator
 class BmiCalculatorView(View):
@@ -108,10 +114,21 @@ class BmiCalculatorView(View):
 
     def get(self, request):
         # Initialize variables for GET request
+        form_data = {}
+        if request.user.is_authenticated:
+            customer = request.user.customer
+            if customer:
+                form_data = {
+                    'gender':customer.gender,
+                    'age':calculate_age(customer.dob) if customer.dob else '',
+                    'height_feet':customer.height_feet or 0,
+                    'height_inch':customer.height_inches or 0,
+                    'weight': ''
+                }
         return render(request, self.template_name, {
             'bmi': None,
             'errors': [],
-            'form_data': {},
+            'form_data': form_data,
             'header': None,
             'review': None,
             'weight_range': None,
@@ -441,13 +458,14 @@ class DashboardView(View):
 
         my_plans = CustomerRegisteredPlan.objects.filter(customer=request.user.customer)
 
-        
+        plan_count = my_plans.count()
 
 
         context = {
             'profile_data':representation,
             'date_options':date_options,
-            'my_plans':my_plans
+            'my_plans':my_plans,
+            'plans_count':plan_count,
         }
         return render(request,self.template_name,context)
     
@@ -489,6 +507,7 @@ class DashboardView(View):
         # Save the updated data
         customer.user.save()
         customer.save()
+        messages.success(request,"Successfully Updated Profile")
         
         return redirect('profile')
 
@@ -515,6 +534,7 @@ def change_password(request):
         # Update password
         user.set_password(new_password)
         user.save()
+        messages.success(request,'Successfully Changed Password')
 
         # Keep the user logged in after password change
         update_session_auth_hash(request, user)
@@ -571,7 +591,7 @@ def daily_plan_view(request,pk):
     # Check if the customer is already registered for this plan
     if CustomerRegisteredPlan.objects.filter(customer=customer, plan=data).exists():
         already_registered = True
-        
+
     print(plans_descriptions)
     return render(request,'mealplanner/daily_plan_view.html',{'data':data,'daily_plans':daily_plans,'descriptions':plans_descriptions,'registered':already_registered,})
 
@@ -599,3 +619,53 @@ def create_customer_plan(request, pk):
         return JsonResponse({'message': 'Plan registered successfully.'})
 
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
+
+
+def get_bmi_health_type(bmi_data):
+     # Determine BMI type
+    print('bmi value',bmi_data)
+    bmi = float(bmi_data)
+    if bmi < 18.5:
+        bmi_type = 1  # Underweight
+        category = "Underweight"
+    elif 18.5 <= bmi < 24.9:
+        bmi_type = 2  # Normal weight
+        category = "Normal"
+    elif 25 <= bmi < 29.9:
+        bmi_type = 3  # Overweight
+        category = "Overweight"
+    else:
+        bmi_type = 4  # Obese
+        category = "Obese"
+
+    return {'bmi_type':bmi_type,'category':category}
+
+@login_required
+def recommended_plans_view(request):
+    plans = Plan.objects.all()
+    customer = get_object_or_404(Customer,user=request.user)
+
+    bmi = request.GET.get('filter')
+    height_feet = request.GET.get('hft')
+    height_inch = request.GET.get('hin')
+    weight = request.GET.get('weight')
+    age = request.GET.get('age')
+    
+
+    bmi_type = get_bmi_health_type(bmi)
+
+    popular_meal_plans = MealPlan.objects.filter(health_level = bmi_type['bmi_type'])
+
+    recommened_plans_count = popular_meal_plans.count()
+
+    print(bmi_type)
+
+    customer_data = {
+        'bmi':f"{float(bmi):.2f}" if bmi else None,
+        'height':f'{height_feet} ft {height_inch} in',
+        'weight':weight,
+        'age':age,
+        'bmi_type':bmi_type['category']
+    }
+    # print(customer)
+    return render(request,'mealplanner/recommended_bmi_plans.html',{'meal_plans':plans,'popular_plans':popular_meal_plans,'customer':customer,'bmi_data':customer_data,'count':recommened_plans_count})

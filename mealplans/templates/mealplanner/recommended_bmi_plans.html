@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+
+
+{% block content  %}
+
+<div class="meal_planner_container">
+    <h1>Recommended Plans ({{count}})</h1>
+    <div class="recommended_user_data">
+        <div class="box">
+           <h2>{{bmi_data.bmi_type}}</h2>
+        <!-- <p>{{request.user.first_name}} {{request.user.last_name}} </p> -->
+       <p class="mt-10">BMI - {{bmi_data.bmi}}</p>
+       <p>HEIGHT - {{bmi_data.height}}</p>
+       <p>AGE -{{bmi_data.age}}</p>
+       <p>WEIGHT - {{bmi_data.weight}}</p>
+       </div>
+
+    </div>
+    <!-- <h1 class="popular_header">Popular Meal Plans</h1> -->
+
+    {% if count %}
+    <div class="popular_plans box_container">
+        {% for content in popular_plans%}
+        <a href="{% url 'daily-plan-content' content.id %}" class="content_box">
+            <div class="img_box">
+                {% if content.image%}
+                <img src="{{content.image.url}}" alt="{{content.title}}">
+                {% else %}
+                <img src="https://picsum.photos/200/20{{forloop.counter}}/" alt="">
+                {% endif %}
+            </div>
+            <h3 class="content_header">{{content.title}}</h3>
+            <p class="short_description">{{content.description}}</p>
+        </a>
+    {% endfor %}
+    </div>
+
+    {% else %}
+
+    <div class="no_plans_box no_recommended_box">
+        <!-- <h2>No Plans Registered Yet</h2> -->
+        <a href="/meal-planner"><button class="global_btn">View Meals Plans</button></a>
+        <a href="/bmi-calculator" class="mt-5 bmi_link">Calculate BMI and Get Personalized Recommendations</a>
+      </div>
+
+    {% endif %}
+</div>
+{% endblock content %}

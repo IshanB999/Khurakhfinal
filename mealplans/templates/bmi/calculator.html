@@ -139,10 +139,25 @@
         </div>
         </div>
 
-        <button class="global_btn simple rect plan_meal_btn">Plan Your Meal</button>
+        <button class="global_btn simple rect plan_meal_btn" onclick="handlePlanYourMealBtn('{%if bmi%}{{bmi}}{% endif %}','&age={{form_data.age}}&hft={{form_data.height_feet}}&hin={{form_data.height_inch}}&weight={{form_data.weight}}')">Plan Your Meal</button>
         <p class="mt-10 primary-color">Healthy BMI range : 18.5 kg/m2 - 25 kg/m2</p>
     </div>
    </div>
 </div>
 
+
+<script>
+    const handlePlanYourMealBtn =(bmi,data_string)=>{
+        // console.log(data)
+        // console.log('bmi data')
+        if(!bmi){
+            snack.showSnack(message="Please Calcuate the BMI First before Planning your Meal",type='error')
+            return;
+        }
+        // console.log('bmi',bmi)
+
+        window.location.href = `recommended-plans/?filter=${bmi}${data_string}`
+        window.location
+    }
+</script>
 {% endblock content %}

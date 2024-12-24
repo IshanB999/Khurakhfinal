@@ -15,7 +15,12 @@
 <div class="get_started_today">
     <h1>Get Started Today</h1>
 
-    <button class="global_btn">SIGN UP</button>
+    {% if not request.user %}
+        <a href="/signup"><button class="global_btn">SIGN UP</button></a>
+    {% else %}
+        <a href="/profile"><button class="global_btn">View My Plans</button></a>
+
+    {% endif %}
 </div>
 
 {% endblock content %}
